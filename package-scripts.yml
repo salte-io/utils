@@ -1,0 +1,23 @@
+scripts:
+  lint:
+    script: eslint src/**/*.js test/**/*.js
+    description: Checks for any formatting errors
+  test:
+    default:
+      script: karma start karma.conf.js --single-run
+      description: Executes the Test Suite
+    tdd:
+      script: karma start karma.conf.js
+      description: Watches for changes and executes the Test Suite accordingly
+    sauce:
+      script: karma start karma.ci.conf.js
+      description: Executes the Test Suite on Sauce Labs
+  serve:
+    script: cross-env NODE_ENVIRONMENT=development parcel index.html --port 8081
+    description: Starts a server at http://localhost:8081
+  build:
+    script: rm -rf dist && parcel build index.html
+    description: Build the Application
+  report-coverage:
+    script: coveralls < coverage/lcov.info
+    description: Reports code coverage information to Coveralls

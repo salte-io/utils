@@ -1,0 +1,25 @@
+{
+    "plugins": [
+      ["module-resolver", {
+        "alias": {
+          "@utils": "./"
+        }
+      }],
+      "@babel/plugin-proposal-class-properties",
+      ["@babel/plugin-proposal-decorators", {
+        "decoratorsBeforeExport": true
+      }]
+    ],
+    "env": {
+      "test": {
+        "plugins": [
+          ["istanbul", {
+            "exclude": [
+              "tests/",
+              ".karma-parcel/"
+            ]
+          }]
+        ]
+      }
+    }
+  }
