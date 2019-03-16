@@ -1,0 +1,28 @@
+sudo: false
+language: node_js
+node_js: stable
+cache: npm
+branches:
+  only:
+    - master
+    - /^greenkeeper/.*$/
+script:
+  # - npm start lint
+  # - if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then npm start test.sauce; fi
+  # - npm start test
+  - npm start build
+# after_success:
+#   - npm start report-coverage
+addons:
+  sauce_connect: true
+deploy:
+  provider: pages
+  skip_cleanup: true
+  email: bot@salte.io
+  name: Salte Bot
+  github_token: $GH_TOKEN
+  local_dir: dist
+  on:
+    branch: master
+notifications:
+  email: change

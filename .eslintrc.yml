@@ -1,0 +1,43 @@
+extends: eslint:recommended
+env:
+  browser: true
+  node: true
+plugins:
+  - compat
+parser: babel-eslint
+parserOptions:
+  ecmaVersion: 8
+  sourceType: module
+globals:
+  Promise: true
+  Polymer: true
+  salte: true
+rules:
+  no-console: 0
+  compat/compat: 2
+  comma-dangle:
+    - error
+    - arrays: never
+      objects: never
+      imports: never
+      exports: never
+      functions: never
+  max-nested-callbacks: 0
+  no-warning-comments: 0
+  require-jsdoc: 0
+  max-len: 0
+  object-curly-spacing: 0
+  one-var: 0
+  arrow-parens: 0
+  no-var: 2
+  prefer-const: 2
+  no-confusing-arrow: 2
+  prefer-arrow-callback: 2
+  switch-colon-spacing: 0
+  no-unused-vars:
+    - error
+    - varsIgnorePattern: ^_
+settings:
+  polyfills:
+    - fetch
+    - promises

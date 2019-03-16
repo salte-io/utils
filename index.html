@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+  <title>Utils</title>
+  <meta name="description" content="Utils">
+  <meta name="keyword" content="continuous, integration">
+
+  <!-- See https://goo.gl/OOhYW5 -->
+  <link rel="manifest" href="./manifest.webmanifest">
+
+  <!-- Add to homescreen for Chrome on Android. Fallback for manifest.json -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Utils">
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Utils">
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto+Slab" rel="stylesheet">
+
+  <script async src="./index.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', 'Noto', sans-serif;
+      line-height: 1.5;
+      height: 100%;
+      min-height: 100vh;
+      background-color: #2f3640;
+      color: #f5f6fa;
+    }
+
+    body[unresolved] {
+      opacity: 1;
+    }
+
+    body[unresolved] utils-app {
+      opacity: 0;
+    }
+
+    utils-app {
+      transition: opacity ease-in-out 0.5s;
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body unresolved>
+  <utils-app></utils-app>
+</body>
+
+</html>
