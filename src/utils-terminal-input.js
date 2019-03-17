@@ -139,4 +139,4 @@ class TerminalInput extends LitElement {
   }
 }
 
-export default TerminalInput;
+export { TerminalInput };

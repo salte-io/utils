@@ -105,4 +105,4 @@ class App extends LitElement {
   }
 }
 
-export default App;
+export { App };

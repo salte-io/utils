@@ -1,6 +1,7 @@
 import { LitElement, html, css, customElement } from 'lit-element';
 
-import PageMixin from '@utils/src/mixins/utils-pages.js';
+import { Commands } from '@utils/src/commands';
+import { PageMixin } from '@utils/src/mixins/utils-pages.js';
 
 import '@utils/src/utils-terminal.js';
 import '@utils/src/utils-button.js';
@@ -107,7 +108,9 @@ class Home extends PageMixin(LitElement) {
 
   updated(changedProperties) {
     if (changedProperties.has('search') && this.search.cmd) {
-      this.search.cmd.forEach((cmd) => {
+      const cmds = JSON.parse(atob(this.search.cmd));
+
+      cmds.forEach((cmd) => {
         this.terminal.add(cmd);
       });
     }
@@ -117,12 +120,7 @@ class Home extends PageMixin(LitElement) {
     super();
 
     this.value = null;
-    this.utils = [
-      'echo',
-      'md5',
-      'base64',
-      'shasum'
-    ];
+    this.utils = Commands.commands.map((command) => command.name);
 
     this.examples = [{
       name: 'Encode a value as a MD5 Hash',
@@ -148,4 +146,4 @@ class Home extends PageMixin(LitElement) {
   }
 }
 
-export default Home;
+export { Home };

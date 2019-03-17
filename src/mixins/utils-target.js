@@ -1,4 +1,4 @@
-const OriginalTargetMixin = function(superClass) {
+export function OriginalTargetMixin(superClass) {
   return class extends superClass {
     getOriginalTarget(ev) {
       if ('composedPath' in ev) return ev.composedPath()[0]; // Standard
@@ -8,7 +8,5 @@ const OriginalTargetMixin = function(superClass) {
       else return ev.target; // Fallback to normal target.
     }
   };
-};
-
-export { OriginalTargetMixin };
+}
 

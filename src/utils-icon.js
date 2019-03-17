@@ -40,4 +40,4 @@ class Terminal extends LitElement {
   }
 }
 
-export default Terminal;
+export { Terminal };

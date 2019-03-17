@@ -64,4 +64,4 @@ class Button extends LitElement {
   }
 }
 
-export default Button;
+export { Button };
