@@ -69,6 +69,7 @@ class Home extends PageMixin(LitElement) {
         ${this.utils.map((util) => html`
           <utils-button @click="${() => {
             this.terminal.add(`${util} --help`);
+            this.terminal.focus();
           }}">${util}</utils-button>
         `)}
       </div>

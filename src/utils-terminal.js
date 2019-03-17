@@ -1,6 +1,6 @@
 import { LitElement, html, css, customElement } from 'lit-element';
 
-import './utils-cli.js';
+import './utils-terminal-input.js';
 import './utils-command.js';
 
 @customElement('utils-terminal')
@@ -71,7 +71,8 @@ class Terminal extends LitElement {
         padding: 15px;
         font-family: monospace;
         font-size: 16px;
-        min-height: 300px;
+        height: 300px;
+        overflow: auto;
       }
 
       .no-menu {
@@ -97,12 +98,15 @@ class Terminal extends LitElement {
 
       <div id="terminal" class="${this.menu ? '' : 'no-menu'}">
         ${this.commands.map((command) => html`
-          <utils-command .value="${command}"></utils-command>
+          <utils-command .value="${command}" @processed="${() => {
+            this.terminal.scrollTo(0, this.terminal.scrollHeight);
+          }}"></utils-command>
         `)}
-        <utils-cli
+        <utils-terminal-input
+          id="input"
           .value="${this.value}"
           @submit="${({ detail: value }) => this.add(value)}">
-        </utils-cli>
+        </utils-terminal-input>
       </div>
     `;
   }
@@ -125,8 +129,32 @@ class Terminal extends LitElement {
   }
 
   add(command) {
-    this.commands.push(command);
-    this.requestUpdate();
+    if (['clear'].includes(command.trim())) {
+      this.commands = [];
+    } else {
+      this.commands.push(command);
+      this.requestUpdate();
+    }
+  }
+
+  get terminal() {
+    if (!this._terminal) {
+      this._terminal = this.shadowRoot.getElementById('terminal');
+    }
+
+    return this._terminal;
+  }
+
+  get input() {
+    if (!this._input) {
+      this._input = this.shadowRoot.getElementById('input');
+    }
+
+    return this._input;
+  }
+
+  focus() {
+    this.input.focus();
   }
 }
 
