@@ -5,6 +5,8 @@ import page from 'page';
 
 import { version } from '@utils/package.json';
 
+import './utils-footer.js';
+
 @customElement('utils-app')
 class App extends LitElement {
   static get styles() {
@@ -12,6 +14,16 @@ class App extends LitElement {
       :host {
         display: flex;
         flex-direction: column;
+        min-height: 100vh;
+      }
+
+      salte-pages {
+        flex: 1;
+      }
+
+      a {
+        color: inherit;
+        outline: none;
       }
     `;
   }
@@ -22,6 +34,12 @@ class App extends LitElement {
         <utils-page-home page="home"></utils-page-home>
         <utils-page-404 page="404"></utils-page-404>
       </salte-pages>
+
+      <utils-footer>
+        <div>
+          Made with ❤️ by the <a href="https://github.com/salte-io" tabindex="-1">Salte Team</a>.
+        </div>
+      </utils-footer>
     `;
   }
 
