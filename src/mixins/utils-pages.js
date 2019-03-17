@@ -1,7 +1,34 @@
 import 'web-animations-js/web-animations-next-lite.min.js';
 
+import page from 'page';
+
 export default function(superClass) {
   return class extends superClass {
+    static get properties() {
+      return {
+        search: Object
+      };
+    }
+
+    connectedCallback() {
+      super.connectedCallback();
+      page('*', (context, next) => {
+        const url = new URL(location.href);
+
+        const search = {};
+        url.searchParams.forEach((value, key) => {
+          if (search[key]) {
+            search[key].push(value);
+          } else {
+            search[key] = [value];
+          }
+        });
+        this.search = search;
+        next();
+      });
+      page();
+    }
+
     show(animate) {
       if (animate) {
         return this.animate([

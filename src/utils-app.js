@@ -5,6 +5,7 @@ import page from 'page';
 
 import { version } from '@utils/package.json';
 
+import './dynamic/utils-bubbles.js';
 import './utils-footer.js';
 import './events/optimized.js';
 
@@ -31,6 +32,8 @@ class App extends LitElement {
 
   render() {
     return html`
+      <utils-bubbles></utils-bubbles>
+
       <salte-pages selected="${this.page}" fallback="404" @load="${this.load}">
         <utils-page-home page="home"></utils-page-home>
         <utils-page-404 page="404"></utils-page-404>
@@ -69,7 +72,7 @@ class App extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     document.body.removeAttribute('unresolved');
-    page('*', (context) => {
+    page('*', (context, next) => {
       const [_dummy, page] = context.path.match(/^\/([^/?]+)?/);
 
       if (['github', 'gitlab', 'bitbucket'].includes(page)) {
@@ -77,6 +80,8 @@ class App extends LitElement {
       } else {
         this.page = page || 'home';
       }
+
+      next();
     });
     page();
   }

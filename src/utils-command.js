@@ -1,11 +1,12 @@
-import * as clipboard from "clipboard-polyfill"
-
 import { LitElement, html, css, customElement } from 'lit-element';
 
+import { CopyMixin } from './mixins/utils-copy.js';
 import { Commands } from './commands';
 
+import { Bubbles } from './dynamic/utils-bubbles.js';
+
 @customElement('utils-command')
-class Command extends LitElement {
+class Command extends CopyMixin(LitElement) {
   static get styles() {
     return css`
       :host {
@@ -73,8 +74,11 @@ class Command extends LitElement {
   }
 
   copy(value) {
-    // TODO: Notification Bubbles
-    clipboard.writeText(value);
+    return super.copy(value).then(() => {
+      Bubbles.Instance.add({
+        message: 'Copied successfully!'
+      });
+    });
   }
 }
 
