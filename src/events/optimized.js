@@ -15,3 +15,7 @@ const throttle = function(type, name, options, reference) {
 throttle('resize', 'optimizedResize', {
   passive: true
 });
+
+throttle('scroll', 'optimizedScroll', {
+  passive: true
+});

@@ -15,24 +15,24 @@ class Terminal extends CopyMixin(LitElement) {
       :host {
         display: flex;
         flex-direction: column;
+        position: relative;
+        width: 600px;
+        height: 320px;
+        max-width: 100%;
       }
 
       #window {
-        position: fixed;
+        position: absolute;
         z-index: 9999;
-        left: 20px;
-        right: 20px;
+        left: 0;
+        right: 0;
+        bottom: 0;
 
         display: flex;
         flex-direction: column;
         margin: 0 auto;
-        max-width: 600px;
-        height: 320px;
         border-radius: 6px;
         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
-
-        transition: 500ms cubic-bezier(0.4, 0, 0.2, 1);
-        transition-property: top, left, right, bottom, max-width, height, border-radius;
       }
 
       .minimize,
@@ -102,16 +102,6 @@ class Terminal extends CopyMixin(LitElement) {
         overflow: auto;
       }
 
-      :host([fullscreen]) #window {
-        max-width: 100%;
-        top: 0 !important;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 100%;
-        border-radius: 0;
-      }
-
       .no-menu {
         border-top-right-radius: inherit;
         border-top-left-radius: inherit;
@@ -147,7 +137,7 @@ class Terminal extends CopyMixin(LitElement) {
           <div class="fake-menu">
             <div class="close"></div>
             <div class="minimize"></div>
-            <div class="zoom" @click="${() => this.fullscreen = !this.fullscreen}"></div>
+            <div class="zoom" @click="${this.toggleFullScreen}"></div>
           </div>
         ` : ''}
 
@@ -202,9 +192,11 @@ class Terminal extends CopyMixin(LitElement) {
   }
 
   resize() {
-    this.style.height = `${this.window.clientHeight}px`;
-    this.style.width = `${this.window.clientWidth}px`;
-    this.window.style.top = `${this.offsetTop}px`;
+    if (this.fullscreen) {
+      this.window.style.top = `${this.offsetTop - window.scrollY}px`;
+    } else {
+      this.window.style.top = '0';
+    }
   }
 
   add(command) {
@@ -258,6 +250,44 @@ class Terminal extends CopyMixin(LitElement) {
       Bubbles.Instance.add({
         message: 'Copied a sharable url for the commands on-screen!'
       });
+    });
+  }
+
+  toggleFullScreen() {
+    this.fullscreen = !this.fullscreen;
+
+    if (this.fullscreen) {
+      this.window.style.position = 'fixed';
+    }
+
+    this.window.animate([{
+      maxWidth: '600px',
+      top: `${this.offsetTop - window.scrollY}px`,
+      bottom: `${this.offsetTop + this.offsetHeight}px`,
+      left: '20px',
+      right: '20px',
+      height: '320px',
+      borderRadius: '6px'
+    }, {
+      maxWidth: '100%',
+      top: '0',
+      bottom: '0',
+      left: '0',
+      right: '0',
+      height: '100%',
+      borderRadius: '0'
+    }], {
+      duration: 500,
+      easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+      direction: this.fullscreen ? 'normal' : 'reverse'
+    }).finished.then(() => {
+      if (this.fullscreen) {
+        this.window.style.borderRadius = '0';
+      } else {
+        this.window.style.borderRadius = '';
+        this.window.style.position = '';
+        this.resize();
+      }
     });
   }
 }
