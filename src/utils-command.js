@@ -11,6 +11,7 @@ class Command extends LitElement {
       :host {
         display: block;
         margin: 0 10px;
+        word-break: break-all;
       }
 
       .output {
