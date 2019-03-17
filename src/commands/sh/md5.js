@@ -1,8 +1,6 @@
 import MD5 from 'crypto-js/md5';
 
-import BaseCLI from './base.js';
-
-export default class CLI extends BaseCLI {
+export default class CLI {
   static get help() {
     return {
       usage: 'md5',

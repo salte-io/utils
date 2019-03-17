@@ -2,7 +2,7 @@ import { repeat } from 'lit-html/directives/repeat';
 
 import { LitElement, html, css, customElement } from 'lit-element';
 
-import './utils-bubble.js';
+import '@utils/src/dynamic/utils-bubble.js';
 
 @customElement('utils-bubbles')
 class Bubbles extends LitElement {

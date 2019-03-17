@@ -4,6 +4,8 @@ import hljs from 'highlight.js/lib/highlight';
 import shell from 'highlight.js/lib/languages/shell';
 hljs.registerLanguage('shell', shell);
 
+import { History } from '@utils/src/storage/history.js';
+
 @customElement('utils-terminal-input')
 class TerminalInput extends LitElement {
   static get styles() {
@@ -71,6 +73,7 @@ class TerminalInput extends LitElement {
 
     this.value = null;
     this.commands = [];
+    this.history = History.linked;
   }
 
   connectedCallback() {
@@ -118,10 +121,12 @@ class TerminalInput extends LitElement {
   onKeyDown(e) {
     if (e.code === 'ArrowUp') {
       e.preventDefault();
-      // TODO: Implement ZSH History
+
+      this.value = History.next();
     } else if (e.code === 'ArrowDown') {
       e.preventDefault();
-      // TODO: Implement ZSH History
+
+      this.value = History.previous();
     } else if (e.code === 'Enter') {
       e.preventDefault();
       const event = new CustomEvent('submit', {
@@ -129,6 +134,7 @@ class TerminalInput extends LitElement {
       });
       this.dispatchEvent(event);
       this.value = null;
+      History.reset();
     }
   }
 }

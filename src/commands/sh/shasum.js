@@ -4,9 +4,7 @@ import SHA256 from 'crypto-js/sha256';
 import SHA384 from 'crypto-js/sha384';
 import SHA512 from 'crypto-js/sha512';
 
-import BaseCLI from './base.js';
-
-export default class CLI extends BaseCLI {
+export default class CLI {
   static get help() {
     return {
       usage: 'shasum [OPTION]...',

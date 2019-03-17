@@ -1,9 +1,9 @@
 import { LitElement, html, css, customElement } from 'lit-element';
 
-import { CopyMixin } from './mixins/utils-copy.js';
-import { Commands } from './commands';
+import { CopyMixin } from '@utils/src/mixins/utils-copy.js';
+import { Commands } from '@utils/src/commands';
 
-import { Bubbles } from './dynamic/utils-bubbles.js';
+import { Bubbles } from '@utils/src/dynamic/utils-bubbles.js';
 
 @customElement('utils-command')
 class Command extends CopyMixin(LitElement) {

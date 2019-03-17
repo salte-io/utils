@@ -1,6 +1,4 @@
-import BaseCLI from './base.js';
-
-export default class CLI extends BaseCLI {
+export default class CLI {
   static get help() {
     return {
       usage: 'base64 [-D]',
