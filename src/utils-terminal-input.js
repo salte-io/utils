@@ -11,22 +11,24 @@ class TerminalInput extends LitElement {
   static get styles() {
     return css`
       :host {
-        display: flex;
-        flex: 1;
+        display: block;
         position: relative;
         min-height: 26px;
+        height: 100%;
       }
 
       textarea {
         color: transparent;
         caret-color: white;
         background: transparent;
-        margin: 2px 10px;
+        margin: 2px 0;
         padding: 0;
-        padding-left: 20px;
+        padding-left: 30px;
+        box-sizing: border-box;
         resize: none;
         border: none;
         width: 100%;
+        height: 100%;
         outline: none;
         font-family: inherit;
         font-size: inherit;
@@ -82,6 +84,11 @@ class TerminalInput extends LitElement {
     this.addEventListener('keydown', this.onKeyDown);
     this.addEventListener('click', this.onCursorChange);
     this.addEventListener('focus', this.onCursorChange);
+
+    // TODO: Figure out why the terminal input gets stuck...
+    setInterval(() => {
+      this.style.transform = this.style.transform === 'translateZ(0px)' ? '' : 'translateZ(0)';
+    }, 200);
   }
 
   disconnectedCallback() {
