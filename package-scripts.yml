@@ -16,7 +16,7 @@ scripts:
     script: cross-env NODE_ENVIRONMENT=development parcel index.html --port 8081
     description: Starts a server at http://localhost:8081
   build:
-    script: rm -rf dist && parcel build index.html
+    script: rm -rf dist && parcel build index.html && cp CNAME dist/CNAME
     description: Build the Application
   report-coverage:
     script: coveralls < coverage/lcov.info
