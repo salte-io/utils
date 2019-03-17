@@ -129,7 +129,10 @@ class Terminal extends LitElement {
   }
 
   add(command) {
-    if (['clear'].includes(command.trim())) {
+    if (!command || !command.trim()) {
+      this.commands.push('');
+      this.requestUpdate();
+    } else if (['clear'].includes(command.trim())) {
       this.commands = [];
     } else {
       this.commands.push(command);
