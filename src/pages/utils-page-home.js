@@ -105,6 +105,14 @@ class Home extends PageMixin(LitElement) {
     };
   }
 
+  updated(changedProperties) {
+    if (changedProperties.has('search') && this.search.cmd) {
+      this.search.cmd.forEach((cmd) => {
+        this.terminal.add(cmd);
+      });
+    }
+  }
+
   constructor() {
     super();
 

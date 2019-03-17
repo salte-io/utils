@@ -1,11 +1,15 @@
-import 'web-animations-js/web-animations-next-lite.min.js';
 import { LitElement, html, css, customElement } from 'lit-element';
+
+import { CopyMixin } from './mixins/utils-copy.js';
+
+import { Bubbles } from './dynamic/utils-bubbles.js';
 
 import './utils-terminal-input.js';
 import './utils-command.js';
+import './utils-icon.js';
 
 @customElement('utils-terminal')
-class Terminal extends LitElement {
+class Terminal extends CopyMixin(LitElement) {
   static get styles() {
     return css`
       :host {
@@ -116,6 +120,23 @@ class Terminal extends LitElement {
       .command {
         margin: 0 10px;
       }
+
+      .share {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+
+        color: rgba(255, 255, 255, 0.3);
+        transition: 0.15s ease-in-out;
+        transition-property: color;
+      }
+
+      .share:hover {
+        color: rgba(255, 255, 255, 0.8);
+      }
     `;
   }
 
@@ -130,6 +151,7 @@ class Terminal extends LitElement {
           </div>
         ` : ''}
 
+
         <div id="terminal" class="${this.menu ? '' : 'no-menu'}">
           ${this.commands.map((command) => html`
             <utils-command .value="${command}" @processed="${() => {
@@ -142,6 +164,7 @@ class Terminal extends LitElement {
             @submit="${({ detail: value }) => this.add(value)}">
           </utils-terminal-input>
         </div>
+        <utils-icon class="share" icon="share" @click="${this.copy}"></utils-icon>
       </div>
     `;
   }
@@ -222,6 +245,20 @@ class Terminal extends LitElement {
 
   focus() {
     this.input.focus();
+  }
+
+  copy() {
+    const url = new URL(location.origin);
+
+    this.commands.forEach((command) => {
+      url.searchParams.append('cmd', command);
+    });
+
+    return super.copy(url.toString()).then(() => {
+      Bubbles.Instance.add({
+        message: 'Copied a sharable url for the commands on-screen!'
+      });
+    });
   }
 }
 
