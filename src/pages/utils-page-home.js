@@ -44,16 +44,21 @@ class Home extends PageMixin(LitElement) {
         align-self: center;
       }
 
-      .utils {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-        row-gap: 10px;
-        column-gap: 10px;
-        margin: 20px;
+      .buttons {
+        display: flex;
+        flex-direction: column;
       }
 
       utils-button {
+        margin: 10px;
         text-align: center;
+      }
+
+      .documentation {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        row-gap: 10px;
+        column-gap: 10px;
       }
     `;
   }
@@ -65,13 +70,30 @@ class Home extends PageMixin(LitElement) {
       <utils-terminal
         id="terminal" menu>
       </utils-terminal>
-      <div class="utils">
-        ${this.utils.map((util) => html`
-          <utils-button @click="${() => {
-            this.terminal.add(`${util} --help`);
-            this.terminal.focus();
-          }}">${util}</utils-button>
-        `)}
+      <div class="documentation">
+        <div class="utils">
+          <h3>Quick Help</h3>
+          <div class="buttons">
+            ${this.utils.map((util) => html`
+              <utils-button @click="${() => {
+                this.terminal.add(`${util} --help`);
+                this.terminal.focus();
+              }}">${util}</utils-button>
+            `)}
+          </div>
+        </div>
+        <div class="examples">
+          <h3>Examples</h3>
+          <div class="buttons">
+            ${this.examples.map((example) => html`
+              <utils-button @click="${() => {
+                this.terminal.add('clear');
+                this.terminal.add(example.script);
+                this.terminal.focus();
+              }}">${example.name}</utils-button>
+            `)}
+          </div>
+        </div>
       </div>
     `;
   }
@@ -91,6 +113,11 @@ class Home extends PageMixin(LitElement) {
       'echo',
       'md5'
     ];
+
+    this.examples = [{
+      name: 'Encode a value as a MD5 Hash',
+      script: 'echo "my-password" | md5'
+    }];
   }
 
   get terminal() {
