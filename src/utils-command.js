@@ -1,5 +1,5 @@
-import { until } from 'lit-html/directives/until.js';
-import { guard } from 'lit-html/directives/guard.js';
+import * as clipboard from "clipboard-polyfill"
+
 import { LitElement, html, css, customElement } from 'lit-element';
 
 import { Commands } from './commands';
@@ -30,8 +30,8 @@ class Command extends LitElement {
 
   render() {
     return html`
-      <div class="${navigator.clipboard ? 'copy': ''}" @click="${() => this.copy(this.value)}">$ ${this.value}</div>
-      <div class="output ${navigator.clipboard ? 'copy': ''}" @click="${() => this.copy(this.output)}">${this.output}</div>
+      <div class="copy" @click="${() => this.copy(this.value)}">$ ${this.value}</div>
+      <div class="output copy" @click="${() => this.copy(this.output)}">${this.output}</div>
     `;
   }
 
@@ -72,10 +72,8 @@ class Command extends LitElement {
   }
 
   copy(value) {
-    if (!navigator.clipboard) return;
-
     // TODO: Notification Bubbles
-    navigator.clipboard.writeText(value);
+    clipboard.writeText(value);
   }
 }
 
