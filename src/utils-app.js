@@ -6,6 +6,7 @@ import page from 'page';
 import { version } from '@utils/package.json';
 
 import './utils-footer.js';
+import './events/optimized.js';
 
 @customElement('utils-app')
 class App extends LitElement {

@@ -1,3 +1,4 @@
+import 'web-animations-js/web-animations-next-lite.min.js';
 import { LitElement, html, css, customElement } from 'lit-element';
 
 import './utils-terminal-input.js';
@@ -10,10 +11,24 @@ class Terminal extends LitElement {
       :host {
         display: flex;
         flex-direction: column;
-        width: 600px;
-        max-width: 100%;
+      }
+
+      #window {
+        position: fixed;
+        z-index: 9999;
+        left: 20px;
+        right: 20px;
+
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+        max-width: 600px;
+        height: 320px;
         border-radius: 6px;
         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+
+        transition: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+        transition-property: top, left, right, bottom, max-width, height, border-radius;
       }
 
       .minimize,
@@ -44,6 +59,14 @@ class Terminal extends LitElement {
         left: 16px;
         background-color: #00ca56;
         border-color: #14ae46;
+        cursor: pointer;
+
+        transition: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+        transition-property: background-color;
+      }
+
+      .zoom:hover {
+        background-color: #aae3c6;
       }
 
       .fake-menu {
@@ -63,6 +86,7 @@ class Terminal extends LitElement {
       #terminal {
         display: flex;
         flex-direction: column;
+        flex: 1;
         position: relative;
         background: #1B1D23;
         color: white;
@@ -71,8 +95,17 @@ class Terminal extends LitElement {
         padding: 15px;
         font-family: monospace;
         font-size: 16px;
-        height: 300px;
         overflow: auto;
+      }
+
+      :host([fullscreen]) #window {
+        max-width: 100%;
+        top: 0 !important;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100%;
+        border-radius: 0;
       }
 
       .no-menu {
@@ -88,25 +121,27 @@ class Terminal extends LitElement {
 
   render() {
     return html`
-      ${this.menu ? html`
-        <div class="fake-menu">
-          <div class="close"></div>
-          <div class="minimize"></div>
-          <div class="zoom"></div>
-        </div>
-      ` : ''}
+      <div id="window">
+        ${this.menu ? html`
+          <div class="fake-menu">
+            <div class="close"></div>
+            <div class="minimize"></div>
+            <div class="zoom" @click="${() => this.fullscreen = !this.fullscreen}"></div>
+          </div>
+        ` : ''}
 
-      <div id="terminal" class="${this.menu ? '' : 'no-menu'}">
-        ${this.commands.map((command) => html`
-          <utils-command .value="${command}" @processed="${() => {
-            this.terminal.scrollTo(0, this.terminal.scrollHeight);
-          }}"></utils-command>
-        `)}
-        <utils-terminal-input
-          id="input"
-          .value="${this.value}"
-          @submit="${({ detail: value }) => this.add(value)}">
-        </utils-terminal-input>
+        <div id="terminal" class="${this.menu ? '' : 'no-menu'}">
+          ${this.commands.map((command) => html`
+            <utils-command .value="${command}" @processed="${() => {
+              this.terminal.scrollTo(0, this.terminal.scrollHeight);
+            }}"></utils-command>
+          `)}
+          <utils-terminal-input
+            id="input"
+            .value="${this.value}"
+            @submit="${({ detail: value }) => this.add(value)}">
+          </utils-terminal-input>
+        </div>
       </div>
     `;
   }
@@ -118,6 +153,11 @@ class Terminal extends LitElement {
         reflect: true
       },
 
+      fullscreen: {
+        type: Boolean,
+        reflect: true
+      },
+
       commands: Array
     }
   }
@@ -125,7 +165,23 @@ class Terminal extends LitElement {
   constructor() {
     super();
 
+    this.resize = this.resize.bind(this);
+
     this.commands = [];
+
+    window.addEventListener('optimizedResize', this.resize, { passive: true });
+  }
+
+  firstUpdated() {
+    this.updateComplete.then(() => {
+      this.resize();
+    });
+  }
+
+  resize() {
+    this.style.height = `${this.window.clientHeight}px`;
+    this.style.width = `${this.window.clientWidth}px`;
+    this.window.style.top = `${this.offsetTop}px`;
   }
 
   add(command) {
@@ -138,6 +194,14 @@ class Terminal extends LitElement {
       this.commands.push(command);
       this.requestUpdate();
     }
+  }
+
+  get window() {
+    if (!this._window) {
+      this._window = this.shadowRoot.getElementById('window');
+    }
+
+    return this._window;
   }
 
   get terminal() {
