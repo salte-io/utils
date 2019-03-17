@@ -1,10 +1,20 @@
-# https://utils.gg
+<div align="center">
+  <a href="https://utils.gg">
+    <img height="260px" src="./images/banner.png">
+  </a>
+</div>
 
+<h3 align="center">
+	Local only implementation of your favorite tools.
+</h3>
+
+<div align="center">
+  
 [![Travis][travis-ci-image]][travis-ci-url]
 [![Coveralls][coveralls-image]][coveralls-url]
 [![Greenkeeper badge][greenkeeper-image]][greenkeeper-url]
-
-> Local only implementation of your favorite tools.
+  
+</div>
 
 ## Quick Start
 
