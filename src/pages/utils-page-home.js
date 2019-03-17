@@ -112,7 +112,8 @@ class Home extends PageMixin(LitElement) {
     this.utils = [
       'echo',
       'md5',
-      'base64'
+      'base64',
+      'shasum'
     ];
 
     this.examples = [{
@@ -124,6 +125,9 @@ class Home extends PageMixin(LitElement) {
     }, {
       name: 'Base64 Decode',
       script: 'echo -n "PHVzZXI+OjxwYXNzd29yZD4K" | base64 --decode'
+    }, {
+      name: 'SHASUM (256) Encode',
+      script: 'echo -n "test" | shasum -a 256'
     }];
   }
 

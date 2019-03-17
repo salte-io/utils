@@ -83,6 +83,9 @@ export class Commands {
       case 'base64':
         promise = import('./sh/base64.js');
         break;
+      case 'shasum':
+        promise = import('./sh/shasum.js');
+        break;
       default:
         promise = Promise.reject(`Unknown command. (${name})`);
     }
