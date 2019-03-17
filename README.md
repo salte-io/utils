@@ -10,11 +10,23 @@
 
 <div align="center">
   
-[![Travis][travis-ci-image]][travis-ci-url]
-[![Coveralls][coveralls-image]][coveralls-url]
-[![Greenkeeper badge][greenkeeper-image]][greenkeeper-url]
+  [![Travis][travis-ci-image]][travis-ci-url]
+  [![Coveralls][coveralls-image]][coveralls-url]
+  [![Greenkeeper badge][greenkeeper-image]][greenkeeper-url]
   
 </div>
+
+## What is [utils.gg](https://utils.gg)?
+
+Utils is all of your favorite unix tools made available via the web!
+
+All of our implementations are client-side meaning none of your data leaves your machine!
+
+## Contributing
+
+Is your favorite utility not implemented yet? [Make a Pull Request](http://makeapullrequest.com)!
+
+Check out our [Contribution Guide](CONTRIBUTING.md)!
 
 ## Quick Start
 

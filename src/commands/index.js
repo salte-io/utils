@@ -2,6 +2,14 @@ import parser from 'yargs-parser';
 import outdent from 'outdent';
 import { Parser } from '@utils/src/commands/utils/parser.js';
 
+import commandModules from '@utils/src/commands/sh/*.js';
+
+const commands = Object.keys(commandModules).map((name) => ({
+  name,
+  aliases: [name].concat(commandModules.aliases || []),
+  cli: commandModules[name].default
+}));
+
 export class Commands {
   static async process(raw) {
     const commands = Parser.parse(raw);
@@ -70,30 +78,17 @@ export class Commands {
     return cli.process(args, input);
   }
 
-  static command(name) {
-    let promise = null;
-
-    switch(name) {
-      case 'echo':
-        promise = import('@utils/src/commands/sh/echo.js');
-        break;
-      case 'md5':
-        promise = import('@utils/src/commands/sh/md5.js');
-        break;
-      case 'base64':
-        promise = import('@utils/src/commands/sh/base64.js');
-        break;
-      case 'shasum':
-        promise = import('@utils/src/commands/sh/shasum.js');
-        break;
-      default:
-        promise = Promise.reject(`Unknown command. (${name})`);
-    }
-
-    return promise.then((imported) => {
-      return imported.default;
-    }).catch((error) => {
-      throw error;
+  static async command(name) {
+    const command = this.commands.find((command) => {
+      return command.aliases.includes(name);
     });
+
+    if (command) return command.cli;
+
+    return Promise.reject(`Unknown command. (${name})`);
+  }
+
+  static get commands() {
+    return commands;
   }
 }

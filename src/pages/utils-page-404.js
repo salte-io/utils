@@ -20,4 +20,4 @@ class NotFound extends PageMixin(LitElement) {
   }
 }
 
-export default NotFound;
+export { NotFound };

@@ -248,9 +248,7 @@ class Terminal extends CopyMixin(LitElement) {
   copy() {
     const url = new URL(location.origin);
 
-    this.commands.forEach((command) => {
-      url.searchParams.append('cmd', command);
-    });
+    url.searchParams.append('cmd', btoa(JSON.stringify(this.commands)));
 
     return super.copy(url.toString()).then(() => {
       Bubbles.Instance.add({
@@ -298,4 +296,4 @@ class Terminal extends CopyMixin(LitElement) {
   }
 }
 
-export default Terminal;
+export { Terminal };

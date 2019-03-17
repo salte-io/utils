@@ -2,7 +2,7 @@ import 'web-animations-js/web-animations-next-lite.min.js';
 
 import page from 'page';
 
-export default function(superClass) {
+export function PageMixin(superClass) {
   return class extends superClass {
     static get properties() {
       return {
@@ -17,10 +17,12 @@ export default function(superClass) {
 
         const search = {};
         url.searchParams.forEach((value, key) => {
-          if (search[key]) {
+          if (Array.isArray(search[key])) {
             search[key].push(value);
+          } else if (search[key]) {
+            search[key] = [search[key], value];
           } else {
-            search[key] = [value];
+            search[key] = value;
           }
         });
         this.search = search;

@@ -24,4 +24,4 @@ class Footer extends LitElement {
   }
 }
 
-export default Footer;
+export { Footer };
