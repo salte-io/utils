@@ -117,13 +117,13 @@ class Home extends PageMixin(LitElement) {
 
     this.examples = [{
       name: 'Encode a value as a MD5 Hash',
-      script: 'echo "my-password" | md5'
+      script: 'echo -n "my-password" | md5'
     }, {
       name: 'Base64 Encode',
-      script: 'echo "<user>:<password>" | base64'
+      script: 'echo -n "<user>:<password>" | base64'
     }, {
       name: 'Base64 Decode',
-      script: 'echo "PHVzZXI+OjxwYXNzd29yZD4K" | base64 --decode'
+      script: 'echo -n "PHVzZXI+OjxwYXNzd29yZD4K" | base64 --decode'
     }];
   }
 

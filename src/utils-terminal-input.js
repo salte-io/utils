@@ -118,8 +118,10 @@ class TerminalInput extends LitElement {
   onKeyDown(e) {
     if (e.code === 'ArrowUp') {
       e.preventDefault();
+      // TODO: Implement ZSH History
     } else if (e.code === 'ArrowDown') {
       e.preventDefault();
+      // TODO: Implement ZSH History
     } else if (e.code === 'Enter') {
       e.preventDefault();
       const event = new CustomEvent('submit', {
