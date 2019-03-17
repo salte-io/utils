@@ -61,7 +61,7 @@ export class Commands {
       });
 
       return outdent`
-        Usage: ${cli.help.usage}
+        Usage: ${name} ${cli.help.usage || ''}
 
         write arguments to the standard output
 

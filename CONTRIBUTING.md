@@ -29,7 +29,9 @@ export default class CLI {
     //
     //   -n  Do not print the trailing newline character.
     return {
-      usage: 'echo [SHORT-OPTION]... [STRING]...',
+      // Don't mention the cli name, this enables us to 
+      // dynamically specify the name if there are aliases!
+      usage: '[SHORT-OPTION]... [STRING]...',
       description: 'write arguments to the standard output',
       options: [{
         keys: ['n'],
