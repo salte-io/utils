@@ -42,7 +42,7 @@ export class Commands {
         return Promise.reject(`Help not supported for. (${name})`);
       }
 
-      let largestKey = 0;
+      let largestOptionKey = 0;
 
       const cliOptions = cli.help.options || [];
       cliOptions.unshift({
@@ -52,11 +52,24 @@ export class Commands {
 
       const options = cliOptions.map((option) => {
         const keys = option.keys.map((key) => `${key.length === 1 ? '-' : '--'}${key}`).join(', ');
-        largestKey = Math.max(largestKey, keys.length);
+        largestOptionKey = Math.max(largestOptionKey, keys.length);
 
         return {
           keys,
           description: option.description
+        };
+      });
+
+      let largestCommandKey = 0;
+
+      const cliCommands = cli.help.commands || [];
+      const commands = cliCommands.map((command) => {
+        const keys = command.keys.join(', ');
+        largestCommandKey = Math.max(largestCommandKey, keys.length);
+
+        return {
+          keys,
+          description: command.description
         };
       });
 
@@ -65,11 +78,19 @@ export class Commands {
 
         write arguments to the standard output
 
+        ${commands.length ? outdent`
+          Commands:
+
+            ${commands.map((command) => outdent`
+              ${command.keys}${' '.repeat(largestCommandKey - command.keys.length)} - ${command.description}
+            `).join('\n  ')}
+        `: ''}
+
         ${options.length ? outdent`
           Options:
 
             ${options.map((option) => outdent`
-              ${option.keys}${' '.repeat(largestKey - option.keys.length + 2)}${option.description}
+              ${option.keys}${' '.repeat(largestOptionKey - option.keys.length + 2)}${option.description}
             `).join('\n  ')}
         ` : ''}
       `

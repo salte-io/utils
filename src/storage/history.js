@@ -39,8 +39,8 @@ export class History {
   }
 
   static clear() {
-    this.list = [];
-    this.store(this.list);
+    this._list = [];
+    this.store(this._list);
   }
 
   static store(history) {

@@ -1,4 +1,7 @@
+import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import { LitElement, html, css, customElement } from 'lit-element';
+
+import Convert from 'ansi-to-html';
 
 import { CopyMixin } from '@utils/src/mixins/utils-copy.js';
 import { Commands } from '@utils/src/commands';
@@ -33,7 +36,7 @@ class Command extends CopyMixin(LitElement) {
   render() {
     return html`
       <div class="copy" @click="${() => this.copy(this.value)}">$ ${this.value}</div>
-      <div class="output copy" @click="${() => this.copy(this.output)}">${this.output}</div>
+      <div class="output copy" @click="${() => this.copy(this.output)}">${unsafeHTML(this.output)}</div>
     `;
   }
 
@@ -52,7 +55,8 @@ class Command extends CopyMixin(LitElement) {
     if (changedProperties.has('value')) {
       this.output = 'Processing...';
       this.process(this.value).then((output) => {
-        this.output = output;
+        const convert = new Convert();
+        this.output = convert.toHtml(output || '');
         this.requestUpdate();
 
         this.dispatchEvent(new CustomEvent('processed'));
