@@ -1,6 +1,4 @@
 import dedent from 'dedent';
-import MD5 from 'crypto-js/md5';
-
 import BaseCLI from './base.js';
 
 export default class CLI extends BaseCLI {
@@ -14,12 +12,20 @@ export default class CLI extends BaseCLI {
 
     if (args.help) {
       return dedent`
-        Usage: md5
+        Usage: base64 [-hD]
 
-        Calculate a message-digest fingerprint (checksum) for a file
+        Encode and decode using Base64 representation
+
+        Options:
+          -h, --help     display this message
+          -D, --decode   decodes input
       `;
     }
 
-    return MD5(input).toString();
+    if (args.decode) {
+      return atob(input);
+    }
+
+    return btoa(input);
   }
 }
