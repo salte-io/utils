@@ -4,14 +4,15 @@ import hljs from 'highlight.js/lib/highlight';
 import shell from 'highlight.js/lib/languages/shell';
 hljs.registerLanguage('shell', shell);
 
-@customElement('utils-cli')
-class Terminal extends LitElement {
+@customElement('utils-terminal-input')
+class TerminalInput extends LitElement {
   static get styles() {
     return css`
       :host {
         display: flex;
         flex: 1;
         position: relative;
+        min-height: 26px;
       }
 
       textarea {
@@ -42,6 +43,7 @@ class Terminal extends LitElement {
   render() {
     return html`
       <textarea
+        id="input"
         type="text"
         spellcheck="false"
         .value="${`$ ${(this.value || '').replace(/\$\s?/g, '')}`}"
@@ -101,6 +103,18 @@ class Terminal extends LitElement {
     return this._visual;
   }
 
+  get input() {
+    if (!this._input) {
+      this._input = this.shadowRoot.getElementById('input');
+    }
+
+    return this._input;
+  }
+
+  focus() {
+    this.input.focus();
+  }
+
   onKeyDown(e) {
     if (e.code === 'ArrowUp') {
       e.preventDefault();
@@ -123,4 +137,4 @@ class Terminal extends LitElement {
   }
 }
 
-export default Terminal;
+export default TerminalInput;

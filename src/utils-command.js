@@ -9,8 +9,7 @@ class Command extends LitElement {
   static get styles() {
     return css`
       :host {
-        display: flex;
-        flex-direction: column;
+        display: block;
         margin: 0 10px;
       }
 
@@ -47,7 +46,7 @@ class Command extends LitElement {
 
     this.error = false;
 
-    return await Commands.process(value).then((output) => {
+    const output = await Commands.process(value).then((output) => {
       return html`
         <div class="output">${output.trim()}</div>
       `
@@ -57,6 +56,11 @@ class Command extends LitElement {
         <div class="output">Error: ${error}</div>
       `;
     });
+
+    setTimeout(() => {
+      this.dispatchEvent(new CustomEvent('processed'));
+    });
+    return output;
   }
 }
 
