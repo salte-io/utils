@@ -1,7 +1,7 @@
 export default class CLI {
   static get help() {
     return {
-      usage: 'base64 [-D]',
+      usage: '[-D]',
       description: 'Encode and decode using Base64 representation',
       options: [{
         keys: ['D', 'decode'],
