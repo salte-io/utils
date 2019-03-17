@@ -111,12 +111,19 @@ class Home extends PageMixin(LitElement) {
     this.value = null;
     this.utils = [
       'echo',
-      'md5'
+      'md5',
+      'base64'
     ];
 
     this.examples = [{
       name: 'Encode a value as a MD5 Hash',
       script: 'echo "my-password" | md5'
+    }, {
+      name: 'Base64 Encode',
+      script: 'echo "<user>:<password>" | base64'
+    }, {
+      name: 'Base64 Decode',
+      script: 'echo "PHVzZXI+OjxwYXNzd29yZD4K" | base64 --decode'
     }];
   }
 

@@ -28,6 +28,9 @@ export class Commands {
       case 'md5':
         promise = import('./sh/md5.js');
         break;
+      case 'base64':
+        promise = import('./sh/base64.js');
+        break;
       default:
         promise = Promise.reject(`Unknown command. (${name})`);
     }
