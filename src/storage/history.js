@@ -1,3 +1,5 @@
+import { Bubbles } from '@utils/src/dynamic/utils-bubbles.js';
+
 export class History {
   static add(command) {
     this.list.unshift(command);
@@ -7,16 +9,26 @@ export class History {
   static next() {
     if ([undefined, null].includes(this.index)) {
       this.index = 0;
+    } else if (this.index >= this.list.length - 1) {
+      this.index = this.list.length - 1;
+      Bubbles.Instance.add({
+        message: `We've hit the edge of the universe, nothing to see here...`
+      });
     } else {
-      this.index = Math.min(this.index + 1, this.list.length - 1);
+      this.index = this.index + 1;
     }
 
     return this.list[this.index];
   }
 
   static previous() {
-    if (![undefined, null].includes(this.index)) {
-      this.index = Math.max(this.index - 1, -1);
+    if (this.index <= -1 || [undefined, null].includes(this.index)) {
+      this.index = -1;
+      Bubbles.Instance.add({
+        message: `We'll you've got to start somewhere!`
+      });
+    } else {
+      this.index = this.index - 1;
     }
 
     return this.list[this.index];
