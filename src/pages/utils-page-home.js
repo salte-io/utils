@@ -2,8 +2,8 @@ import { LitElement, html, css, customElement } from 'lit-element';
 
 import PageMixin from '@utils/src/mixins/utils-pages.js';
 
-import '../utils-terminal.js';
-import '../utils-button.js';
+import '@utils/src/utils-terminal.js';
+import '@utils/src/utils-button.js';
 
 @customElement('utils-page-home')
 class Home extends PageMixin(LitElement) {

@@ -1,6 +1,6 @@
 import parser from 'yargs-parser';
 import outdent from 'outdent';
-import { Parser } from './utils/parser.js';
+import { Parser } from '@utils/src/commands/utils/parser.js';
 
 export class Commands {
   static async process(raw) {
@@ -75,16 +75,16 @@ export class Commands {
 
     switch(name) {
       case 'echo':
-        promise = import('./sh/echo.js');
+        promise = import('@utils/src/commands/sh/echo.js');
         break;
       case 'md5':
-        promise = import('./sh/md5.js');
+        promise = import('@utils/src/commands/sh/md5.js');
         break;
       case 'base64':
-        promise = import('./sh/base64.js');
+        promise = import('@utils/src/commands/sh/base64.js');
         break;
       case 'shasum':
-        promise = import('./sh/shasum.js');
+        promise = import('@utils/src/commands/sh/shasum.js');
         break;
       default:
         promise = Promise.reject(`Unknown command. (${name})`);

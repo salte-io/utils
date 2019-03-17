@@ -5,9 +5,9 @@ import page from 'page';
 
 import { version } from '@utils/package.json';
 
-import './dynamic/utils-bubbles.js';
-import './utils-footer.js';
-import './events/optimized.js';
+import '@utils/src/dynamic/utils-bubbles.js';
+import '@utils/src/utils-footer.js';
+import '@utils/src/events/optimized.js';
 
 @customElement('utils-app')
 class App extends LitElement {

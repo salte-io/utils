@@ -1,12 +1,14 @@
 import { LitElement, html, css, customElement } from 'lit-element';
 
-import { CopyMixin } from './mixins/utils-copy.js';
+import { CopyMixin } from '@utils/src/mixins/utils-copy.js';
 
-import { Bubbles } from './dynamic/utils-bubbles.js';
+import { Bubbles } from '@utils/src/dynamic/utils-bubbles.js';
 
-import './utils-terminal-input.js';
-import './utils-command.js';
-import './utils-icon.js';
+import { History } from '@utils/src/storage/history.js';
+
+import '@utils/src/utils-terminal-input.js';
+import '@utils/src/utils-command.js';
+import '@utils/src/utils-icon.js';
 
 @customElement('utils-terminal')
 class Terminal extends CopyMixin(LitElement) {
@@ -205,9 +207,13 @@ class Terminal extends CopyMixin(LitElement) {
       this.requestUpdate();
     } else if (['clear'].includes(command.trim())) {
       this.commands = [];
+
+      History.add(command.trim());
     } else {
       this.commands.push(command);
       this.requestUpdate();
+
+      History.add(command.trim());
     }
   }
 
