@@ -20,13 +20,18 @@ class Command extends LitElement {
       :host([error]) .output {
         color: #e84118;
       }
+
+      .copy:hover {
+        cursor: pointer;
+        background-color: rgba(255, 255, 255, 0.1);
+      }
     `;
   }
 
   render() {
     return html`
-      <div>$ ${this.value}</div>
-      ${guard([this.value], () => until(this.output(this.value), html`Processing...`))}
+      <div class="${navigator.clipboard ? 'copy': ''}" @click="${() => this.copy(this.value)}">$ ${this.value}</div>
+      <div class="output ${navigator.clipboard ? 'copy': ''}" @click="${() => this.copy(this.output)}">${this.output}</div>
     `;
   }
 
@@ -41,26 +46,36 @@ class Command extends LitElement {
     };
   }
 
-  async output(value) {
+  updated(changedProperties) {
+    if (changedProperties.has('value')) {
+      this.output = 'Processing...';
+      this.process(this.value).then((output) => {
+        this.output = output;
+        this.requestUpdate();
+
+        this.dispatchEvent(new CustomEvent('processed'));
+      });
+    }
+  }
+
+  async process(value) {
     if (!value) return value;
 
     this.error = false;
 
-    const output = await Commands.process(value).then((output) => {
-      return html`
-        <div class="output">${output.trim()}</div>
-      `
+    return await Commands.process(value).then((output) => {
+      return output.trim();
     }).catch((error) => {
       this.error = true;
-      return html`
-        <div class="output">Error: ${error}</div>
-      `;
+      return `Error: ${error}`;
     });
+  }
 
-    setTimeout(() => {
-      this.dispatchEvent(new CustomEvent('processed'));
-    });
-    return output;
+  copy(value) {
+    if (!navigator.clipboard) return;
+
+    // TODO: Notification Bubbles
+    navigator.clipboard.writeText(value);
   }
 }
 

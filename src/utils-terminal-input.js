@@ -21,6 +21,7 @@ class TerminalInput extends LitElement {
         background: transparent;
         margin: 2px 10px;
         padding: 0;
+        padding-left: 20px;
         resize: none;
         border: none;
         width: 100%;
@@ -46,10 +47,9 @@ class TerminalInput extends LitElement {
         id="input"
         type="text"
         spellcheck="false"
-        .value="${`$ ${(this.value || '').replace(/\$\s?/g, '')}`}"
+        .value="${this.value || null}"
         @input="${({ target }) => {
-          const value = target.value.replace(/\$\s?/g, '');
-          this.value = value;
+          this.value = target.value;
           const event = new CustomEvent('change', {
             detail: this.value
           });
@@ -128,12 +128,6 @@ class TerminalInput extends LitElement {
       this.dispatchEvent(event);
       this.value = null;
     }
-
-    this.onCursorChange(e);
-  }
-
-  onCursorChange({ target }) {
-    target.selectionStart = Math.max(3, target.selectionStart);
   }
 }
 
