@@ -147,7 +147,7 @@ class Terminal extends CopyMixin(LitElement) {
         <div id="terminal" class="${this.menu ? '' : 'no-menu'}">
           ${this.commands.map((command) => html`
             <utils-command .value="${command}" @processed="${() => {
-              this.terminal.scrollTo(0, this.terminal.scrollHeight);
+              this.focus();
             }}"></utils-command>
           `)}
           <utils-terminal-input
@@ -243,6 +243,7 @@ class Terminal extends CopyMixin(LitElement) {
 
   focus() {
     this.input.focus();
+    this.input.scrollIntoView(true);
   }
 
   copy() {

@@ -14,7 +14,6 @@ export default class CLI {
 
   static process(args, input) {
     if (args._.length) {
-      // filter
       return input.split('\n').filter((line) => {
         return line.includes(args._.join(' '));
       }).map((line) => {

@@ -59,7 +59,9 @@ class Command extends CopyMixin(LitElement) {
         this.output = convert.toHtml(output || '');
         this.requestUpdate();
 
-        this.dispatchEvent(new CustomEvent('processed'));
+        setTimeout(window.requestAnimationFrame(() => {
+          this.dispatchEvent(new CustomEvent('processed'));
+        }));
       });
     }
   }
