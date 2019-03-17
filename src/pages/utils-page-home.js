@@ -62,12 +62,14 @@ class Home extends PageMixin(LitElement) {
     return html`
       <h1>utils.gg</h1>
       <h2>Local only implementation of your favorite tools.</h2>
-      <utils-terminal menu>
+      <utils-terminal
+        id="terminal" menu>
       </utils-terminal>
-      <h3>View the Documentation!</h3>
       <div class="utils">
         ${this.utils.map((util) => html`
-          <utils-button checkable>${util}</utils-button>
+          <utils-button @click="${() => {
+            this.terminal.add(`${util} --help`);
+          }}">${util}</utils-button>
         `)}
       </div>
     `;
@@ -84,7 +86,18 @@ class Home extends PageMixin(LitElement) {
     super();
 
     this.value = null;
-    this.utils = ['md5', 'sha256'];
+    this.utils = [
+      'echo',
+      'md5'
+    ];
+  }
+
+  get terminal() {
+    if (!this._terminal) {
+      this._terminal = this.shadowRoot.getElementById('terminal');
+    }
+
+    return this._terminal;
   }
 }
 

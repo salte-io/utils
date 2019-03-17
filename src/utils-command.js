@@ -54,7 +54,7 @@ class Command extends LitElement {
     }).catch((error) => {
       this.error = true;
       return html`
-        Error: ${error}
+        <div class="output">Error: ${error}</div>
       `;
     });
   }

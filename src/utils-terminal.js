@@ -101,10 +101,7 @@ class Terminal extends LitElement {
         `)}
         <utils-cli
           .value="${this.value}"
-          @submit="${({ detail: value }) => {
-            this.commands.push(value);
-            this.requestUpdate();
-          }}">
+          @submit="${({ detail: value }) => this.add(value)}">
         </utils-cli>
       </div>
     `;
@@ -125,6 +122,11 @@ class Terminal extends LitElement {
     super();
 
     this.commands = [];
+  }
+
+  add(command) {
+    this.commands.push(command);
+    this.requestUpdate();
   }
 }
 
