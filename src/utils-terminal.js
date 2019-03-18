@@ -195,7 +195,10 @@ class Terminal extends CopyMixin(LitElement) {
 
   resize() {
     if (this.fullscreen) {
-      this.window.style.top = `${this.offsetTop - window.scrollY}px`;
+      this.window.style.top = `0`;
+      this.window.style.left = `0`;
+      this.window.style.right = `0`;
+      this.window.style.bottom = `0`;
     } else {
       this.window.style.top = '0';
     }
@@ -291,8 +294,8 @@ class Terminal extends CopyMixin(LitElement) {
       } else {
         this.window.style.borderRadius = '';
         this.window.style.position = '';
-        this.resize();
       }
+      this.resize();
     });
   }
 }
