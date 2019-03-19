@@ -1,4 +1,5 @@
 import { LitElement, html, css, customElement } from 'lit-element';
+import { KEY_UP, KEY_DOWN, KEY_RETURN, KEY_U, KEY_K } from 'keycode-js';
 
 import hljs from 'highlight.js/lib/highlight';
 import shell from 'highlight.js/lib/languages/shell';
@@ -51,7 +52,7 @@ class TerminalInput extends LitElement {
         id="input"
         type="text"
         spellcheck="false"
-        .value="${this.value || null}"
+        .value="${this.value || ''}"
         @input="${({ target }) => {
           this.value = target.value;
           const event = new CustomEvent('change', {
@@ -126,23 +127,38 @@ class TerminalInput extends LitElement {
   }
 
   onKeyDown(e) {
-    if (e.code === 'ArrowUp') {
+    if (e.metaKey && e.keyCode === KEY_K) {
+      e.preventDefault();
+
+      this.submit('clear', true);
+    } else if (e.ctrlKey && e.keyCode === KEY_U) {
+      e.preventDefault();
+
+      this.value = '';
+    } else if (e.keyCode === KEY_UP) {
       e.preventDefault();
 
       this.value = History.next();
-    } else if (e.code === 'ArrowDown') {
+    } else if (e.keyCode === KEY_DOWN) {
       e.preventDefault();
 
       this.value = History.previous();
-    } else if (e.code === 'Enter') {
+    } else if (e.keyCode === KEY_RETURN) {
       e.preventDefault();
-      const event = new CustomEvent('submit', {
-        detail: this.value
-      });
-      this.dispatchEvent(event);
-      this.value = null;
-      History.reset();
+      this.submit(this.value);
     }
+  }
+
+  submit(value, ignore) {
+    const event = new CustomEvent('submit', {
+      detail: {
+        value,
+        ignore
+      }
+    });
+    this.dispatchEvent(event);
+    this.value = null;
+    History.reset();
   }
 }
 

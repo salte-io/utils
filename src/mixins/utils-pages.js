@@ -1,4 +1,5 @@
 import 'web-animations-js/web-animations-next-lite.min.js';
+import 'url-polyfill';
 
 import page from 'page';
 

@@ -153,7 +153,7 @@ class Terminal extends CopyMixin(LitElement) {
           <utils-terminal-input
             id="input"
             .value="${this.value}"
-            @submit="${({ detail: value }) => this.add(value)}">
+            @submit="${({ detail }) => this.add(detail.value, detail.ignore)}">
           </utils-terminal-input>
         </div>
         <utils-icon class="share" icon="share" @click="${this.copy}"></utils-icon>
@@ -204,19 +204,19 @@ class Terminal extends CopyMixin(LitElement) {
     }
   }
 
-  add(command) {
+  add(command, ignore) {
     if (!command || !command.trim()) {
       this.commands.push('');
       this.requestUpdate();
     } else if (['clear'].includes(command.trim())) {
       this.commands = [];
 
-      History.add(command.trim());
+      if (!ignore) History.add(command.trim());
     } else {
       this.commands.push(command);
       this.requestUpdate();
 
-      History.add(command.trim());
+      if (!ignore) History.add(command.trim());
     }
   }
 
@@ -246,7 +246,7 @@ class Terminal extends CopyMixin(LitElement) {
 
   focus() {
     this.input.focus();
-    this.input.scrollIntoView(true);
+    this.terminal.scrollTop = this.terminal.scrollHeight;
   }
 
   copy() {

@@ -1,3 +1,5 @@
+import '@webcomponents/webcomponentsjs/webcomponents-bundle.js';
+
 console.log('[Utils]: Checking for the magic! ✨');
 
 // NOTE: Requiring CSS Grid means that we don't support Edge <= 15.
