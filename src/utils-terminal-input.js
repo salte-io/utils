@@ -7,6 +7,8 @@ hljs.registerLanguage('shell', shell);
 
 import { History } from '@utils/src/storage/history.js';
 
+import '@utils/src/utils-command.js';
+
 @customElement('utils-terminal-input')
 class TerminalInput extends LitElement {
   static get styles() {
@@ -22,9 +24,8 @@ class TerminalInput extends LitElement {
         color: transparent;
         caret-color: white;
         background: transparent;
-        margin: 2px 0;
         padding: 0;
-        padding-left: 30px;
+        padding-left: 20px;
         box-sizing: border-box;
         resize: none;
         border: none;
@@ -33,12 +34,15 @@ class TerminalInput extends LitElement {
         outline: none;
         font-family: inherit;
         font-size: inherit;
+        line-height: 1.5;
       }
 
-      #visual {
+      utils-command {
         position: absolute;
-        top: -1px;
-        left: 10px;
+        top: 0;
+        left: 0;
+        right: 0;
+        pointer-events: none;
       }
 
       /* HighlightJS Tomorrow Night */
@@ -61,7 +65,7 @@ class TerminalInput extends LitElement {
           this.dispatchEvent(event);
         }}">
       </textarea>
-      <div id="visual"></div>
+      <utils-command .value="${this.value}" terminal></utils-command>
     `;
   }
 
@@ -87,9 +91,9 @@ class TerminalInput extends LitElement {
     this.addEventListener('focus', this.onCursorChange);
 
     // TODO: Figure out why the terminal input gets stuck...
-    setInterval(() => {
-      this.style.transform = this.style.transform === 'translateZ(0px)' ? '' : 'translateZ(0)';
-    }, 200);
+    // setInterval(() => {
+    //   this.style.transform = this.style.transform === 'translateZ(0px)' ? '' : 'translateZ(0)';
+    // }, 200);
   }
 
   disconnectedCallback() {
@@ -98,20 +102,6 @@ class TerminalInput extends LitElement {
     this.removeEventListener('keydown', this.onKeyDown);
     this.removeEventListener('click', this.onCursorChange);
     this.removeEventListener('focus', this.onCursorChange);
-  }
-
-  updated(changedProperties) {
-    if (changedProperties.has('value')) {
-      this.visual.innerHTML = `$ ${hljs.highlight('shell', this.value || '').value}`;
-    }
-  }
-
-  get visual() {
-    if (!this._visual) {
-      this._visual = this.shadowRoot.getElementById('visual');
-    }
-
-    return this._visual;
   }
 
   get input() {
