@@ -14,8 +14,19 @@ class Command extends CopyMixin(LitElement) {
     return css`
       :host {
         display: block;
-        margin: 0 10px;
+        position: relative;
         word-break: break-all;
+      }
+
+      .command {
+        padding-left: 20px;
+        line-height: 1.5;
+      }
+
+      .command:before {
+        content: '$';
+        position: absolute;
+        left: 0;
       }
 
       .output {
@@ -35,7 +46,7 @@ class Command extends CopyMixin(LitElement) {
 
   render() {
     return html`
-      <div class="copy" @click="${() => this.copy(this.value)}">$ ${this.value}</div>
+      <div class="command ${this.terminal ? '' : 'copy'}" @click="${() => this.copy(this.value)}">${this.value}</div>
       ${this.output ? html`
         <div class="output copy" @click="${() => this.copy(this.output)}">${unsafeHTML(this.output)}</div>
       ` : ''}
@@ -49,12 +60,17 @@ class Command extends CopyMixin(LitElement) {
         reflect: true
       },
 
-      value: String
+      value: String,
+
+      terminal: {
+        type: Boolean,
+        reflect: true
+      }
     };
   }
 
   updated(changedProperties) {
-    if (changedProperties.has('value')) {
+    if (changedProperties.has('value') && !this.terminal) {
       this.output = 'Processing...';
       this.process(this.value).then((output) => {
         const convert = new Convert();
