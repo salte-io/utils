@@ -36,7 +36,9 @@ class Command extends CopyMixin(LitElement) {
   render() {
     return html`
       <div class="copy" @click="${() => this.copy(this.value)}">$ ${this.value}</div>
-      <div class="output copy" @click="${() => this.copy(this.output)}">${unsafeHTML(this.output)}</div>
+      ${this.output ? html`
+        <div class="output copy" @click="${() => this.copy(this.output)}">${unsafeHTML(this.output)}</div>
+      ` : ''}
     `;
   }
 
@@ -71,9 +73,7 @@ class Command extends CopyMixin(LitElement) {
 
     this.error = false;
 
-    return await Commands.process(value).then((output) => {
-      return output.trim();
-    }).catch((error) => {
+    return await Commands.process(value).catch((error) => {
       this.error = true;
       return `Error: ${error}`;
     });
