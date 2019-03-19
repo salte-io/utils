@@ -76,7 +76,7 @@ export class Commands {
       return outdent`
         Usage: ${name} ${cli.help.usage || ''}
 
-        write arguments to the standard output
+        ${cli.help.description}
         ${commands.length ? outdent`\n
           Commands:
 
