@@ -1,15 +1,15 @@
 const throttle = function(type, name, options, reference) {
   reference = reference || window;
   let running = false;
-  const func = function() {
+
+  reference.addEventListener(type, () => {
     if (running) { return; }
     running = true;
     requestAnimationFrame(() => {
       reference.dispatchEvent(new CustomEvent(name));
       running = false;
     });
-  };
-  reference.addEventListener(type, func, options);
+  }, options);
 }
 
 throttle('resize', 'optimizedResize', {
@@ -19,3 +19,5 @@ throttle('resize', 'optimizedResize', {
 throttle('scroll', 'optimizedScroll', {
   passive: true
 });
+
+export { throttle };
