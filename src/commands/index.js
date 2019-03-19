@@ -77,15 +77,13 @@ export class Commands {
         Usage: ${name} ${cli.help.usage || ''}
 
         write arguments to the standard output
-
-        ${commands.length ? outdent`
+        ${commands.length ? outdent`\n
           Commands:
 
             ${commands.map((command) => outdent`
               ${command.keys}${' '.repeat(largestCommandKey - command.keys.length)} - ${command.description}
-            `).join('\n  ')}
+            `).join('\n  ')}\n
         `: ''}
-
         ${options.length ? outdent`
           Options:
 
