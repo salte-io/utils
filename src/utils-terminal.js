@@ -6,6 +6,7 @@ import { Bubbles } from '@utils/src/dynamic/utils-bubbles.js';
 
 import { History } from '@utils/src/storage/history.js';
 
+import '@utils/src/utils-resizer.js';
 import '@utils/src/utils-terminal-input.js';
 import '@utils/src/utils-command.js';
 import '@utils/src/utils-icon.js';
@@ -18,8 +19,6 @@ class Terminal extends CopyMixin(LitElement) {
         display: flex;
         flex-direction: column;
         position: relative;
-        width: 600px;
-        height: 320px;
         max-width: 100%;
       }
 
@@ -134,30 +133,31 @@ class Terminal extends CopyMixin(LitElement) {
 
   render() {
     return html`
-      <div id="window">
-        ${this.menu ? html`
-          <div class="fake-menu">
-            <div class="close"></div>
-            <div class="minimize"></div>
-            <div class="zoom" @click="${this.toggleFullScreen}"></div>
+      <utils-resizer min-width="600px" min-height="320px" .disabled="${this.fullscreen}">
+        <div id="window">
+          ${this.menu ? html`
+            <div class="fake-menu">
+              <div class="close"></div>
+              <div class="minimize"></div>
+              <div class="zoom" @click="${this.toggleFullScreen}"></div>
+            </div>
+          ` : ''}
+
+          <div id="terminal" class="${this.menu ? '' : 'no-menu'}">
+            ${this.commands.map((command) => html`
+              <utils-command .value="${command}" @processed="${() => {
+                this.focus();
+              }}"></utils-command>
+            `)}
+            <utils-terminal-input
+              id="input"
+              .value="${this.value}"
+              @submit="${({ detail }) => this.add(detail.value, detail.ignore)}">
+            </utils-terminal-input>
           </div>
-        ` : ''}
-
-
-        <div id="terminal" class="${this.menu ? '' : 'no-menu'}">
-          ${this.commands.map((command) => html`
-            <utils-command .value="${command}" @processed="${() => {
-              this.focus();
-            }}"></utils-command>
-          `)}
-          <utils-terminal-input
-            id="input"
-            .value="${this.value}"
-            @submit="${({ detail }) => this.add(detail.value, detail.ignore)}">
-          </utils-terminal-input>
+          <utils-icon class="share" icon="share" @click="${this.copy}"></utils-icon>
         </div>
-        <utils-icon class="share" icon="share" @click="${this.copy}"></utils-icon>
-      </div>
+      </utils-resizer>
     `;
   }
 
@@ -268,21 +268,18 @@ class Terminal extends CopyMixin(LitElement) {
       this.window.style.position = 'fixed';
     }
 
+    const { top, left, right, bottom } = this.getBoundingClientRect();
     this.window.animate([{
-      maxWidth: '600px',
-      top: `${this.offsetTop - window.scrollY}px`,
-      bottom: `${this.offsetTop + this.offsetHeight}px`,
-      left: '20px',
-      right: '20px',
-      height: '320px',
+      top: `${top}px`,
+      left: `${left}px`,
+      bottom: `${window.innerHeight - bottom}px`,
+      right: `${window.innerWidth - right}px`,
       borderRadius: '6px'
     }, {
-      maxWidth: '100%',
       top: '0',
       bottom: '0',
       left: '0',
       right: '0',
-      height: '100%',
       borderRadius: '0'
     }], {
       duration: 500,
