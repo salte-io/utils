@@ -10,6 +10,7 @@ class Resizer extends LitElement {
         display: block;
         position: relative;
         height: 100%;
+        max-width: 100%;
       }
 
       .resizer {
@@ -72,6 +73,9 @@ class Resizer extends LitElement {
 
   static get properties() {
     return {
+      width: Number,
+      height: Number,
+
       minWidth: {
         type: String,
         reflect: true,
@@ -99,6 +103,14 @@ class Resizer extends LitElement {
   }
 
   updated(changedProperties) {
+    if (changedProperties.has('width')) {
+      this.style.width = `${this.width}px`;
+    }
+
+    if (changedProperties.has('height')) {
+      this.style.height = `${this.height}px`;
+    }
+
     if (changedProperties.has('minWidth')) {
       this.style.minWidth = this.minWidth;
     }
@@ -124,11 +136,11 @@ class Resizer extends LitElement {
 
   resize(e) {
     if (this.any(this.resizer, 'e', 'se')) {
-      this.style.width = e.pageX - this.getBoundingClientRect().left + 'px';
+      this.width = e.pageX - this.getBoundingClientRect().left;
     }
 
     if (this.any(this.resizer, 's', 'se')) {
-      this.style.height = e.pageY - this.getBoundingClientRect().top + 'px';
+      this.height = e.pageY - this.getBoundingClientRect().top;
     }
   }
 
@@ -143,6 +155,13 @@ class Resizer extends LitElement {
   stopResize() {
     this.resizer = null;
     window.removeEventListener('mousemove', this.resize);
+
+    this.dispatchEvent(new CustomEvent('resized', {
+      detail: {
+        width: this.width,
+        height: this.height
+      }
+    }))
   }
 }
 

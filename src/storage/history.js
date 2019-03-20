@@ -1,3 +1,4 @@
+import { Storage } from '@utils/src/storage/storage.js';
 import { Bubbles } from '@utils/src/dynamic/utils-bubbles.js';
 
 export class History {
@@ -44,12 +45,12 @@ export class History {
   }
 
   static store(history) {
-    localStorage.setItem('salte-io.utils.history', JSON.stringify(history));
+    Storage.set('history', JSON.stringify(history));
   }
 
   static get list() {
     if (!this._list) {
-      this._list = JSON.parse(localStorage.getItem('salte-io.utils.history') || '[]');
+      this._list = JSON.parse(Storage.get('history') || '[]');
       this.store(this._list);
     }
 

@@ -1,8 +1,4 @@
-import chalk from 'chalk';
-
-chalk.enabled = true;
-chalk.supportsColor = true;
-chalk.level = 3;
+import { chalk } from '@utils/src/commands/utils/chalk.js'
 
 export default class CLI {
   static get help() {

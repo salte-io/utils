@@ -71,7 +71,6 @@ class Command extends CopyMixin(LitElement) {
 
   updated(changedProperties) {
     if (changedProperties.has('value') && !this.terminal) {
-      this.output = 'Processing...';
       this.process(this.value).then((output) => {
         const convert = new Convert();
         this.output = convert.toHtml(output || '');
