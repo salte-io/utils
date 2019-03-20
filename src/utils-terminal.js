@@ -5,6 +5,7 @@ import { CopyMixin } from '@utils/src/mixins/utils-copy.js';
 import { Bubbles } from '@utils/src/dynamic/utils-bubbles.js';
 
 import { History } from '@utils/src/storage/history.js';
+import { Preferences } from '@utils/src/storage/preferences.js';
 
 import '@utils/src/utils-resizer.js';
 import '@utils/src/utils-terminal-input.js';
@@ -133,7 +134,15 @@ class Terminal extends CopyMixin(LitElement) {
 
   render() {
     return html`
-      <utils-resizer min-width="600px" min-height="320px" .disabled="${this.fullscreen}">
+      <utils-resizer
+        width="${this.terminal.width}"
+        height="${this.terminal.height}"
+        min-width="600px"
+        min-height="320px"
+        .disabled="${this.fullscreen}"
+        @resized="${({ detail: terminal }) => {
+          this.terminal = terminal;
+        }}">
         <div id="window">
           ${this.menu ? html`
             <div class="fake-menu">
@@ -145,9 +154,9 @@ class Terminal extends CopyMixin(LitElement) {
 
           <div id="terminal" class="${this.menu ? '' : 'no-menu'}">
             ${this.commands.map((command) => html`
-              <utils-command .value="${command}" @processed="${() => {
-                this.focus();
-              }}"></utils-command>
+              <utils-command .value="${command}"
+                @processed="${() => this.focus()}">
+              </utils-command>
             `)}
             <utils-terminal-input
               id="input"
@@ -163,6 +172,8 @@ class Terminal extends CopyMixin(LitElement) {
 
   static get properties() {
     return {
+      terminal: Object,
+
       menu: {
         type: Boolean,
         reflect: true
@@ -185,12 +196,20 @@ class Terminal extends CopyMixin(LitElement) {
     this.commands = [];
 
     window.addEventListener('optimizedResize', this.resize, { passive: true });
+
+    this.terminal = Preferences.terminal;
   }
 
   firstUpdated() {
     this.updateComplete.then(() => {
       this.resize();
     });
+  }
+
+  updated(changedProperties) {
+    if (changedProperties.has('terminal')) {
+      Preferences.terminal = this.terminal;
+    }
   }
 
   resize() {
@@ -228,7 +247,7 @@ class Terminal extends CopyMixin(LitElement) {
     return this._window;
   }
 
-  get terminal() {
+  get terminalElement() {
     if (!this._terminal) {
       this._terminal = this.shadowRoot.getElementById('terminal');
     }
@@ -246,7 +265,7 @@ class Terminal extends CopyMixin(LitElement) {
 
   focus() {
     this.input.focus();
-    this.terminal.scrollTop = this.terminal.scrollHeight;
+    this.terminalElement.scrollTop = this.terminalElement.scrollHeight;
   }
 
   copy() {
