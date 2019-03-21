@@ -21,6 +21,8 @@ class Terminal extends CopyMixin(LitElement) {
         flex-direction: column;
         position: relative;
         max-width: 100%;
+        min-width: 600px;
+        min-height: 320px;
       }
 
       #window {
@@ -129,6 +131,17 @@ class Terminal extends CopyMixin(LitElement) {
       .share:hover {
         color: rgba(255, 255, 255, 0.8);
       }
+
+      utils-resizer {
+        min-width: inherit;
+        min-height: inherit;
+      }
+
+      @media all and (max-width: 700px) {
+        :host {
+          min-width: 100%;
+        }
+      }
     `;
   }
 
@@ -137,8 +150,6 @@ class Terminal extends CopyMixin(LitElement) {
       <utils-resizer
         width="${this.terminal.width}"
         height="${this.terminal.height}"
-        min-width="600px"
-        min-height="320px"
         .disabled="${this.fullscreen}"
         @resized="${({ detail: terminal }) => {
           this.terminal = terminal;
