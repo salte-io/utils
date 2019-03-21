@@ -28,6 +28,10 @@ Is your favorite utility not implemented yet? [Make a Pull Request](http://makea
 
 Check out our [Contribution Guide](CONTRIBUTING.md)!
 
+---
+
+**Special thanks to [Netlify](https://www.netlify.com/) for powering the website.**
+
 [travis-ci-image]: https://img.shields.io/travis/com/salte-io/utils/master.svg?style=flat
 [travis-ci-url]: https://travis-ci.com/salte-io/utils
 

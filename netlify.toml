@@ -1,0 +1,11 @@
+[Settings]
+ID = "utils-gg"
+
+[build]
+  publish = "dist/"
+  command = "npm start build"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
