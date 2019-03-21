@@ -9,3 +9,8 @@ ID = "utils-gg"
   from = "/*"
   to = "/index.html"
   status = 200
+
+[[redirects]]
+  from = "https://utils-gg.netlify.com/*"
+  to = "https://utils.gg/:splat"
+  status = 301
