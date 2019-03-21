@@ -99,52 +99,54 @@
 
   <script>
     if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
-      let swPath = `service-worker.js`;
-      navigator.serviceWorker.register(swPath).then((registration) => {
-        registration.addEventListener('updatefound', () => {
-          const installingWorker = registration.installing;
-          installingWorker.addEventListener('statechange', () => {
-            switch (installingWorker.state) {
-              case 'installed':
-                if (!navigator.serviceWorker.controller) {
-                  window.utils.Bubbles.Instance.add({
-                    message: 'Caching complete! Future visits will work offline.'
-                  });
-                }
-                break;
+      window.addEventListener('load', () => {
+        let swPath = `service-worker.js`;
+        navigator.serviceWorker.register(swPath).then((registration) => {
+          registration.addEventListener('updatefound', () => {
+            const installingWorker = registration.installing;
+            installingWorker.addEventListener('statechange', () => {
+              switch (installingWorker.state) {
+                case 'installed':
+                  if (!navigator.serviceWorker.controller) {
+                    window.utils.Bubbles.Instance.add({
+                      message: 'Caching complete! Future visits will work offline.'
+                    });
+                  }
+                  break;
 
-              case 'redundant':
-                throw Error('The installing service worker became redundant.');
-            }
+                case 'redundant':
+                  throw Error('The installing service worker became redundant.');
+              }
+            }, { once: true });
           }, { once: true });
-        }, { once: true });
 
-          if (!navigator.serviceWorker.controller) return;
+            if (!navigator.serviceWorker.controller) return;
 
-          navigator.serviceWorker.controller.addEventListener('statechange', ({ target }) => {
-            switch (target.state) {
-              case 'redundant':
-                const handler = () => {
-                  window.location.reload();
-                };
+            navigator.serviceWorker.controller.addEventListener('statechange', ({ target }) => {
+              switch (target.state) {
+                case 'redundant':
+                  const handler = () => {
+                    window.location.reload();
+                  };
 
-                if (window.utils && window.utils.Bubbles) {
-                  window.utils.Bubbles.Instance.add({
-                    duration: 'sticky',
-                    message: 'A new version of this app is available.',
-                    handler: {
-                      text: 'Refresh',
-                      callback: handler
-                    }
-                  });
-                } else {
-                  handler(); // Force reload if user never was shown the message.
-                }
-                break;
-            }
-          }, { once: true });
-      }).catch((error) => {
-        console.error('ServiceWorker registration failed: ', err);
+                  if (window.utils && window.utils.Bubbles) {
+                    window.utils.Bubbles.Instance.add({
+                      duration: 'sticky',
+                      message: 'A new version of this app is available.',
+                      handler: {
+                        text: 'Refresh',
+                        callback: handler
+                      }
+                    });
+                  } else {
+                    handler(); // Force reload if user never was shown the message.
+                  }
+                  break;
+              }
+            }, { once: true });
+        }).catch((error) => {
+          console.error('ServiceWorker registration failed: ', err);
+        });
       });
     }
   </script>

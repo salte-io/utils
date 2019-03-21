@@ -13,6 +13,7 @@ class Bubbles extends LitElement {
         z-index: 10000;
         top: 20px;
         left: 20px;
+        right: 20px;
 
         display: flex;
         flex-direction: column;
