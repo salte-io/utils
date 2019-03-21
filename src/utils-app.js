@@ -38,12 +38,6 @@ class App extends LitElement {
         <utils-page-home page="home"></utils-page-home>
         <utils-page-404 page="404"></utils-page-404>
       </salte-pages>
-
-      <utils-footer>
-        <div>
-          Made with ❤️ by the <a href="https://github.com/salte-io" tabindex="-1">Salte Team</a>.
-        </div>
-      </utils-footer>
     `;
   }
 
