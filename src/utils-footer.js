@@ -8,6 +8,7 @@ class Footer extends LitElement {
       :host {
         display: flex;
         flex-direction: row;
+        justify-content: center;
         padding: 20px;
       }
 
