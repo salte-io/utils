@@ -76,18 +76,6 @@ class Resizer extends LitElement {
       width: Number,
       height: Number,
 
-      minWidth: {
-        type: String,
-        reflect: true,
-        attribute: 'min-width'
-      },
-
-      minHeight: {
-        type: String,
-        reflect: true,
-        attribute: 'min-height'
-      },
-
       disabled: {
         type: Boolean,
         reflect: true
@@ -109,14 +97,6 @@ class Resizer extends LitElement {
 
     if (changedProperties.has('height')) {
       this.style.height = `${this.height}px`;
-    }
-
-    if (changedProperties.has('minWidth')) {
-      this.style.minWidth = this.minWidth;
-    }
-
-    if (changedProperties.has('minHeight')) {
-      this.style.minHeight = this.minHeight;
     }
 
     if (changedProperties.has('disabled')) {
