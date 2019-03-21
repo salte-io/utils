@@ -38,6 +38,10 @@ class App extends LitElement {
         <utils-page-home page="home"></utils-page-home>
         <utils-page-404 page="404"></utils-page-404>
       </salte-pages>
+
+      <utils-footer>
+        <div>Special thanks to <a href="https://www.netlify.com">Netlify</a> for powering the website.</div>
+      </utils-footer>
     `;
   }
 
