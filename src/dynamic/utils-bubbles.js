@@ -21,11 +21,20 @@ class Bubbles extends LitElement {
   }
 
   render() {
+    const bubbles = this.bubbles.sort((a, b) => {
+      if (a.duration === b.duration) return 0;
+      else if (a.duration === 'sticky') return -1;
+      else if (b.duration === 'sticky') return 1;
+
+      return 0;
+    });
+
     return html`
-      ${repeat(this.bubbles, (bubble) => bubble.id, (bubble) => html`
+      ${repeat(bubbles, (bubble) => bubble.id, (bubble) => html`
         <utils-bubble
           id="bubble-${bubble.id}"
           .duration="${bubble.duration}"
+          .handler="${bubble.handler}"
           @removed="${() => this.remove(bubble)}">
           ${bubble.message}
         </utils-bubble>
@@ -58,13 +67,17 @@ class Bubbles extends LitElement {
     options.id = this.id;
     this.bubbles.push(options);
 
-    const excessBubbles = this.bubbles.length - this.maxBubbles;
+    let excessBubbles = this.bubbles.length - this.maxBubbles;
 
     for (let i = 0; i < excessBubbles; i++) {
       const bubble = this.bubbles[i];
 
       const element = this.shadowRoot.getElementById(`bubble-${bubble.id}`);
-      element.remove();
+      if (bubble.duration === 0) {
+        excessBubbles++;
+      } else {
+        element.remove();
+      }
     }
 
     this.requestUpdate();
@@ -80,4 +93,6 @@ class Bubbles extends LitElement {
   }
 }
 
+window.utils = window.utils || {};
+window.utils.Bubbles = Bubbles;
 export { Bubbles };

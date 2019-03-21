@@ -1,5 +1,7 @@
 import { LitElement, html, css, customElement } from 'lit-element';
 
+import '@utils/src/utils-button.js';
+
 @customElement('utils-bubble')
 class Bubble extends LitElement {
   static get styles() {
@@ -15,6 +17,8 @@ class Bubble extends LitElement {
       }
 
       .content {
+        display: flex;
+        align-items: center;
         padding: 10px;
         margin: 5px;
         border-radius: 5px;
@@ -25,6 +29,10 @@ class Bubble extends LitElement {
       :host([visible]) {
         opacity: 1;
       }
+
+      utils-button {
+        margin-left: 20px;
+      }
     `;
   }
 
@@ -32,6 +40,9 @@ class Bubble extends LitElement {
     return html`
       <div class="content">
         <slot></slot>
+        ${this.handler ? html`
+          <utils-button @click="${this.handler.callback}">${this.handler.text}</utils-button>
+        ` : ''}
       </div>
     `;
   }
@@ -43,7 +54,9 @@ class Bubble extends LitElement {
       visible: {
         type: Boolean,
         reflect: true
-      }
+      },
+
+      handler: Function
     };
   }
 
@@ -57,6 +70,8 @@ class Bubble extends LitElement {
     setTimeout(window.requestAnimationFrame(() => {
       this.visible = true;
     }));
+
+    if (this.duration === 'sticky') return;
 
     this.timer = setTimeout(this.remove, this.duration || 2000);
   }
