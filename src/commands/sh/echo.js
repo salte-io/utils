@@ -1,19 +1,18 @@
 export default class CLI {
-  static get help() {
+  static get info() {
     return {
       usage: '[SHORT-OPTION]... [STRING]...',
       description: 'write arguments to the standard output',
-      options: [{
-        keys: ['n'],
+      args: [{
+        name: 'n',
+        type: 'boolean',
         description: 'Do not print the trailing newline character.'
       }]
-    }
+    };
   }
 
-  static get args() {
-    return {
-      boolean: ['n']
-    };
+  static get pipes() {
+    return false;
   }
 
   static process(args) {

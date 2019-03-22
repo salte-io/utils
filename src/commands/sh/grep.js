@@ -1,11 +1,15 @@
 import { chalk } from '@utils/src/commands/utils/chalk.js'
 
 export default class CLI {
-  static get help() {
+  static get info() {
     return {
       usage: '[pattern]',
       description: 'file pattern searcher'
     };
+  }
+
+  static get pipes() {
+    return true;
   }
 
   static process(args, input) {

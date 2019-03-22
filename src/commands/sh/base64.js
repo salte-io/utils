@@ -1,22 +1,19 @@
 export default class CLI {
-  static get help() {
+  static get info() {
     return {
       usage: '[-D]',
       description: 'Encode and decode using Base64 representation',
-      options: [{
-        keys: ['D', 'decode'],
+      args: [{
+        name: 'decode',
+        type: 'boolean',
+        aliases: ['D'],
         description: 'decodes input'
       }]
-    }
+    };
   }
 
-  static get args() {
-    return {
-      alias: {
-        decode: ['D']
-      },
-      boolean: ['decode']
-    };
+  static get pipes() {
+    return true;
   }
 
   static process(args, input) {

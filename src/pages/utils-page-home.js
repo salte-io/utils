@@ -64,6 +64,10 @@ class Home extends PageMixin(LitElement) {
     `;
   }
 
+  get header() {
+    return 'Terminal';
+  }
+
   render() {
     return html`
       <h1>utils.gg</h1>

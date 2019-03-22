@@ -59,10 +59,9 @@ class TerminalInput extends LitElement {
         .value="${this.value || ''}"
         @input="${({ target }) => {
           this.value = target.value;
-          const event = new CustomEvent('change', {
+          this.dispatchEvent(new CustomEvent('change', {
             detail: this.value
-          });
-          this.dispatchEvent(event);
+          }));
         }}">
       </textarea>
       <utils-command .value="${this.value}" terminal></utils-command>
@@ -140,13 +139,12 @@ class TerminalInput extends LitElement {
   }
 
   submit(value, ignore) {
-    const event = new CustomEvent('submit', {
+    this.dispatchEvent(new CustomEvent('submit', {
       detail: {
         value,
         ignore
       }
-    });
-    this.dispatchEvent(event);
+    }));
     this.value = null;
     History.reset();
   }

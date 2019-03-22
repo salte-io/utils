@@ -18,7 +18,8 @@ First, create the `cli` class for your respective cli.
 ```js
 // @utils/src/commands/sh/echo.js
 export default class CLI {
-  static get help() {
+  // This is utilized for both help and parsing the arguments.
+  static get info() {
     // This outputs something similar to the following when the user enters 'echo --help'
     // 
     // Usage: echo [SHORT-OPTION]... [STRING]...
@@ -33,19 +34,11 @@ export default class CLI {
       // dynamically specify the name if there are aliases!
       usage: '[SHORT-OPTION]... [STRING]...',
       description: 'write arguments to the standard output',
-      options: [{
-        keys: ['n'],
+      args: [{
+        name: 'n',
+        type: 'boolean', // valid values are 'string', 'number', and 'boolean'
         description: 'Do not print the trailing newline character.'
       }]
-    }
-  }
-
-  // We utilize 'yargs-parser' for parsing arguments.
-  // As such these align with their options.
-  // https://www.npmjs.com/package/yargs-parser#requireyargs-parserargs-opts
-  static get args() {
-    return {
-      boolean: ['n']
     };
   }
 
