@@ -40,7 +40,7 @@ class Pipe extends LitElement {
           label="Command"
           .selected="${this.commandName}"
           placeholder="Select a Pipe!"
-          @change="${({ detail }) => this.commandName = detail}">
+          @change="${this.onCommandChange}">
           ${this.commands.map((command) => html`
             <div value="${command.name}">${command.name} - ${command.cli.info.description}</div>
           `)}
@@ -108,20 +108,11 @@ class Pipe extends LitElement {
   }
 
   set commandName(commandName) {
-    if (this.create) {
-      this.dispatchEvent(new CustomEvent('create', {
-        detail: commandName
-      }));
+    this._commandName = commandName;
+    this.command = this.commands.find((command) => command.name === this.commandName);
 
-      this._commandName = null;
-      this.requestUpdate('commandName');
-    } else {
-      this._commandName = commandName;
-      this.command = this.commands.find((command) => command.name === this.commandName);
-
-      this.args = this.processArgs(this.command);
-      this.requestUpdate();
-    }
+    this.args = this.processArgs(this.command);
+    this.requestUpdate();
   }
 
   constructor() {
@@ -177,6 +168,18 @@ class Pipe extends LitElement {
     }
 
     return 'Unknown';
+  }
+
+  onCommandChange(e) {
+    if (this.create) {
+      this.dispatchEvent(new CustomEvent('create', {
+        detail: e.detail
+      }));
+
+      e.target.selected = null;
+    } else {
+      this.commandName = e.detail;
+    }
   }
 }
 

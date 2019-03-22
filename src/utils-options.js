@@ -21,7 +21,7 @@ class Option extends LitElement {
         font-weight: lighter;
       }
 
-      .selection {
+      #selection {
         padding: 15px 20px;
         border-radius: 5px;
 
@@ -31,11 +31,11 @@ class Option extends LitElement {
         cursor: pointer;
       }
 
-      .selection:hover {
+      #selection:hover {
         background: rgba(255, 255, 255, 0.2);
       }
 
-      .options {
+      #options {
         position: absolute;
         z-index: 1;
         top: 100%;
@@ -52,12 +52,12 @@ class Option extends LitElement {
         transition-property: opacity;
       }
 
-      :host([opened]) .options {
+      :host([opened]) #options {
         pointer-events: all;
         opacity: 1;
       }
 
-      .options ::slotted(*) {
+      #options ::slotted(*) {
         padding: 15px 20px;
         cursor: pointer;
 
@@ -65,11 +65,11 @@ class Option extends LitElement {
         transition-property: background-color;
       }
 
-      .options ::slotted(.selected) {
+      #options ::slotted(.selected) {
         font-style: italic;
       }
 
-      .options ::slotted(*:hover) {
+      #options ::slotted(*:hover) {
         background: rgba(255, 255, 255, 0.2);
       }
     `;
@@ -78,8 +78,8 @@ class Option extends LitElement {
   render() {
     return html`
       <label>${this.label}</label>
-      <div class="selection" @click="${this.toggle}">${this.selected || this.placeholder}</div>
-      <div class="options" @click="${this.select}">
+      <div id="selection" @click="${this.toggle}">${this.selected || this.placeholder}</div>
+      <div id="options" @click="${this.select}">
         <slot></slot>
       </div>
     `;
@@ -144,7 +144,7 @@ class Option extends LitElement {
   _close(e) {
     const path = e.path || (e.composedPath && e.composedPath());
 
-    if (path.includes(this)) return;
+    if (path.includes(this.selection) || path.includes(this.options)) return;
 
     this.close();
   }
@@ -168,6 +168,22 @@ class Option extends LitElement {
 
   value(element) {
     return element.getAttribute(this.attrForSelected);
+  }
+
+  get selection() {
+    if (!this._selection) {
+      this._selection = this.shadowRoot.getElementById('selection');
+    }
+
+    return this._selection;
+  }
+
+  get options() {
+    if (!this._options) {
+      this._options = this.shadowRoot.getElementById('options');
+    }
+
+    return this._options;
   }
 }
 

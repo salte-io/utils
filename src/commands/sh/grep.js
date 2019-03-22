@@ -9,7 +9,7 @@ export default class CLI {
   }
 
   static get pipes() {
-    return true;
+    return false; // TODO: Add support for providing input to CLIs via pipes
   }
 
   static process(args, input) {
