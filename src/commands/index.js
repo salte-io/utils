@@ -6,7 +6,7 @@ import commandModules from '@utils/src/commands/sh/*.js';
 
 const commands = Object.keys(commandModules).map((name) => ({
   name,
-  aliases: [name].concat(commandModules.aliases || []),
+  aliases: [name].concat(commandModules[name].aliases || []),
   cli: commandModules[name].default
 }));
 
@@ -35,36 +35,38 @@ export class Commands {
           return arg.map((arg) => arg.replace(/^"/, '').replace(/"$/, ''));
         }
       }
-    }, cli.args));
+    }, this.convertArgsToYargs(cli.info.args)));
 
     if (args.help) {
-      if (!cli.help) {
-        return Promise.reject(`Help not supported for. (${name})`);
-      }
-
       let largestOptionKey = 0;
 
-      const cliOptions = cli.help.options || [];
+      const cliOptions = cli.info.args || [];
       cliOptions.unshift({
-        keys: ['h', 'help'],
+        name: 'help',
+        aliases: ['h'],
         description: 'display this message'
       });
 
-      const options = cliOptions.map((option) => {
-        const keys = option.keys.map((key) => `${key.length === 1 ? '-' : '--'}${key}`).join(', ');
+      const options = cliOptions.map((arg) => {
+        const keys = [arg.name].concat(arg.aliases || [])
+          .map((key) => `${key.length === 1 ? '-' : '--'}${key}`)
+          .join(', ');
+
         largestOptionKey = Math.max(largestOptionKey, keys.length);
+
+        const options = arg.options && arg.options.map((option) => `${option} ${option === arg.default ? '[default]' : ''}`.trim());
 
         return {
           keys,
-          description: option.description
+          description: `${arg.description} ${options ? `(${options.join(', ')})` : ''}`.trim()
         };
       });
 
       let largestCommandKey = 0;
 
-      const cliCommands = cli.help.commands || [];
+      const cliCommands = cli.info.commands || [];
       const commands = cliCommands.map((command) => {
-        const keys = command.keys.join(', ');
+        const keys = [command.name].concat(command.aliases || []).join(', ');
         largestCommandKey = Math.max(largestCommandKey, keys.length);
 
         return {
@@ -74,9 +76,9 @@ export class Commands {
       });
 
       return outdent`
-        Usage: ${name} ${cli.help.usage || ''}
+        Usage: ${name} ${cli.info.usage || ''}
 
-        ${cli.help.description}
+        ${cli.info.description}
         ${commands.length ? outdent`\n
           Commands:
 
@@ -109,5 +111,24 @@ export class Commands {
 
   static get commands() {
     return commands;
+  }
+
+  static convertArgsToYargs(args) {
+    return args && args.reduce((output, arg) => {
+      output[arg.type] = output[arg.type] || [];
+      output[arg.type].push(arg.name);
+
+      if (arg.aliases) {
+        output.alias = output.alias || {};
+        output.alias[arg.name] = arg.aliases;
+      }
+
+      if (arg.default) {
+        output.default = output.default || {};
+        output.default[arg.name] = arg.default;
+      }
+
+      return output;
+    }, {});
   }
 }

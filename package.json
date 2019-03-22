@@ -19,7 +19,6 @@
     "node-uuid": "^1.4.8",
     "outdent": "^0.7.0",
     "page": "^1.11.4",
-    "parcel-plugin-sw-precache": "^1.0.4",
     "promise.prototype.finally": "^3.1.0",
     "sql-formatter": "^2.3.2",
     "url-polyfill": "^1.1.5",

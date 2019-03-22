@@ -1,36 +1,36 @@
 export default class CLI {
-  static get help() {
+  static get info() {
     return {
       description: 'Pretty prints the json provided by stdin.',
-      options: [{
-        keys: ['i', 'indent'],
-        description: `How indentation should be handled. ('tabs' or 'spaces')`
+      args: [{
+        name: 'indent',
+        type: 'string',
+        aliases: ['i'],
+        default: 'spaces',
+        options: ['spaces', 'tabs'],
+        description: `How indentation should be handled.`
       }, {
-        keys: ['n', 'number'],
-        description: 'The number of tabs / spaces to indent by.'
+        name: 'number',
+        type: 'number',
+        aliases: ['n'],
+        default: 2,
+        description: `The number of tabs / spaces to indent by.`
       }]
-    }
-  }
-
-  static get args() {
-    return {
-      alias: {
-        indent: ['i'],
-        number: ['n']
-      },
-      default: {
-        indent: 'spaces',
-        number: 2
-      },
-      string: ['indent'],
-      number: ['number']
     };
   }
 
+  static get pipes() {
+    return true;
+  }
+
   static process(args, input) {
-    return JSON.stringify(JSON.parse(input), {
-      tabs: '\t',
-      spaces: ' '
-    }[args.indent], args.number);
+    try {
+      return JSON.stringify(JSON.parse(input), {
+        tabs: '\t',
+        spaces: ' '
+      }[args.indent], args.number);
+    } catch (error) {
+      throw new Error('Invalid JSON');
+    }
   }
 }

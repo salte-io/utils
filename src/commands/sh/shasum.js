@@ -5,24 +5,23 @@ import SHA384 from 'crypto-js/sha384';
 import SHA512 from 'crypto-js/sha512';
 
 export default class CLI {
-  static get help() {
+  static get info() {
     return {
       usage: '[OPTION]...',
       description: 'Print SHA checksums.',
-      options: [{
-        keys: ['a', 'algorithm'],
-        description: '1 (default), 224, 256, 384, 512, 512224, 512256'
+      args: [{
+        name: 'algorithm',
+        type: 'string',
+        aliases: ['a'],
+        options: ['1', '224', '256', '384', '512'],
+        default: '1',
+        description: '1 (default), 224, 256, 384, 512'
       }]
     };
   }
 
-  static get args() {
-    return {
-      alias: {
-        algorithm: ['a']
-      },
-      string: ['algorithm']
-    };
+  static get pipes() {
+    return true;
   }
 
   static async process(args, input) {
