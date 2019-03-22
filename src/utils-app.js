@@ -36,6 +36,7 @@ class App extends LitElement {
 
       <salte-pages selected="${this.page}" fallback="404" @load="${this.load}">
         <utils-page-home page="home"></utils-page-home>
+        <utils-page-pipes page="pipes"></utils-page-pipes>
         <utils-page-404 page="404"></utils-page-404>
       </salte-pages>
 
@@ -73,11 +74,7 @@ class App extends LitElement {
     page('*', (context, next) => {
       const [_dummy, page] = context.path.match(/^\/([^/?]+)?/);
 
-      if (['github', 'gitlab', 'bitbucket'].includes(page)) {
-        this.page = 'repository';
-      } else {
-        this.page = page || 'home';
-      }
+      this.page = page || 'home';
 
       next();
     });
@@ -89,6 +86,9 @@ class App extends LitElement {
     switch (page) {
       case 'home':
         promise = import('@utils/src/pages/utils-page-home.js');
+        break;
+      case 'pipes':
+        promise = import('@utils/src/pages/utils-page-pipes.js');
         break;
       case '404':
         promise = import('@utils/src/pages/utils-page-404.js');

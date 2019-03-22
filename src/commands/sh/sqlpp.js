@@ -1,37 +1,35 @@
 import formatter from 'sql-formatter';
 
 export default class CLI {
-  static get help() {
+  static get info() {
     return {
       description: 'Pretty prints the sql provided by stdin.',
-      options: [{
-        keys: ['l', 'language'],
-        description: 'The dialect of the sql being processed. (sql [default], n1ql, db2, pl/sql)'
+      args: [{
+        name: 'language',
+        type: 'string',
+        aliases: ['l'],
+        default: 'sql',
+        options: ['sql', 'n1ql', 'db2', 'pl/sql'],
+        description: 'The dialect of the sql being processed.'
       }, {
-        keys: ['i', 'indent'],
-        description: `How indentation should be handled. ('tabs' or 'spaces')`
+        name: 'indent',
+        type: 'string',
+        aliases: ['i'],
+        default: 'spaces',
+        options: ['spaces', 'tabs'],
+        description: `How indentation should be handled.`
       }, {
-        keys: ['n', 'number'],
+        name: 'number',
+        type: 'number',
+        aliases: ['n'],
+        default: 2,
         description: 'The number of tabs / spaces to indent by.'
       }]
-    }
+    };
   }
 
-  static get args() {
-    return {
-      alias: {
-        indent: ['i'],
-        number: ['n'],
-        language: ['l']
-      },
-      default: {
-        indent: 'spaces',
-        number: 2,
-        language: 'sql'
-      },
-      string: ['language', 'indent'],
-      number: ['number']
-    }
+  static get pipes() {
+    return true;
   }
 
   static process(args, input) {

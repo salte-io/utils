@@ -89,6 +89,7 @@ class Command extends CopyMixin(LitElement) {
     this.error = false;
 
     return await Commands.process(value).catch((error) => {
+      console.error(error);
       this.error = true;
       return `Error: ${error}`;
     });

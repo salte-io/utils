@@ -57,10 +57,9 @@ class Button extends LitElement {
   onCheck() {
     this.checked = !this.checked;
 
-    const event = new CustomEvent('checked', {
+    this.dispatchEvent(new CustomEvent('checked', {
       detail: this.checkable
-    });
-    this.dispatchEvent(event);
+    }));
   }
 }
 

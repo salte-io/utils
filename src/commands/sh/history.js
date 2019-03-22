@@ -1,14 +1,18 @@
 import { History } from '@utils/src/storage/history.js';
 
 export default class CLI {
-  static get help() {
+  static get info() {
     return {
       description: 'outputs the current history',
       commands: [{
-        keys: ['clear'],
+        name: 'clear',
         description: 'Clears your history'
       }]
-    }
+    };
+  }
+
+  static get pipes() {
+    return false;
   }
 
   static process(args) {
