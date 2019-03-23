@@ -93,6 +93,8 @@ class Terminal extends PageMixin(LitElement) {
   }
 
   updated(changedProperties) {
+    super.updated(changedProperties);
+
     if (changedProperties.has('search') && this.search.cmd) {
       const cmds = JSON.parse(atob(this.search.cmd));
 
