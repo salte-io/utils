@@ -19,22 +19,6 @@ class Pipes extends PageMixin(LitElement) {
         padding: 20px;
       }
 
-      h1, h2 {
-        margin: 0 auto;
-        text-align: center;
-      }
-
-      h1 {
-        font-size: 3em;
-        font-weight: normal;
-      }
-
-      h2 {
-        margin: 20px;
-        font-family: 'Roboto Slab', serif;
-        font-weight: lighter;
-      }
-
       utils-pipe {
         margin-top: 20px;
       }
@@ -54,8 +38,6 @@ class Pipes extends PageMixin(LitElement) {
 
   render() {
     return html`
-      <h1>utils.gg</h1>
-      <h2>Local only implementation of your favorite tools.</h2>
       <utils-card>
         <h3>Input</h3>
         <utils-textarea

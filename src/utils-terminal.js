@@ -8,6 +8,7 @@ import { History } from '@utils/src/storage/history.js';
 import { Preferences } from '@utils/src/storage/preferences.js';
 
 import '@utils/src/utils-resizer.js';
+import '@utils/src/utils-terminal-window.js';
 import '@utils/src/utils-terminal-input.js';
 import '@utils/src/utils-command.js';
 import '@utils/src/utils-icon.js';
@@ -23,92 +24,6 @@ class Terminal extends CopyMixin(LitElement) {
         max-width: 100%;
         min-width: 600px;
         min-height: 320px;
-      }
-
-      #window {
-        position: absolute;
-        z-index: 9999;
-        left: 0;
-        right: 0;
-        bottom: 0;
-
-        display: flex;
-        flex-direction: column;
-        margin: 0 auto;
-        border-radius: 6px;
-        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
-      }
-
-      .minimize,
-      .zoom,
-      .close {
-        height: 10px;
-        width: 10px;
-        border-radius: 50%;
-        border: 1px solid #000;
-        position: relative;
-        top: 6px;
-        display: inline-block;
-      }
-
-      .close {
-        left: 6px;
-        background-color: #ff5c5c;
-        border-color: #e33e41;
-      }
-
-      .minimize {
-        left: 11px;
-        background-color: #ffbd4c;
-        border-color: #e09e3e;
-      }
-
-      .zoom {
-        left: 16px;
-        background-color: #00ca56;
-        border-color: #14ae46;
-        cursor: pointer;
-
-        transition: 500ms cubic-bezier(0.4, 0, 0.2, 1);
-        transition-property: background-color;
-      }
-
-      .zoom:hover {
-        background-color: #aae3c6;
-      }
-
-      .fake-menu {
-        display: flex;
-        box-sizing: border-box;
-        height: 25px;
-        border-top-right-radius: inherit;
-        border-top-left-radius: inherit;
-        background-color: #ebebeb;
-        background: -webkit-linear-gradient(top, #ebebeb, #d5d5d5);
-        background: -moz-linear-gradient(top, #ebebeb, #d5d5d5);
-        background: -ms-linear-gradient(top, #ebebeb, #d5d5d5);
-        background: -o-linear-gradient(top, #ebebeb, #d5d5d5);
-        background: linear-gradient(top, #ebebeb, #d5d5d5);
-      }
-
-      #terminal {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        position: relative;
-        background: #1B1D23;
-        color: white;
-        border-bottom-right-radius: inherit;
-        border-bottom-left-radius: inherit;
-        padding: 15px;
-        font-family: monospace;
-        font-size: 16px;
-        overflow: auto;
-      }
-
-      .no-menu {
-        border-top-right-radius: inherit;
-        border-top-left-radius: inherit;
       }
 
       .command {
@@ -130,6 +45,15 @@ class Terminal extends CopyMixin(LitElement) {
 
       .share:hover {
         color: rgba(255, 255, 255, 0.8);
+      }
+
+      #window {
+        position: absolute;
+        z-index: 9999;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
       }
 
       utils-resizer {
@@ -154,29 +78,19 @@ class Terminal extends CopyMixin(LitElement) {
         @resized="${({ detail: terminal }) => {
           this.terminal = terminal;
         }}">
-        <div id="window">
-          ${this.menu ? html`
-            <div class="fake-menu">
-              <div class="close"></div>
-              <div class="minimize"></div>
-              <div class="zoom" @click="${this.toggleFullScreen}"></div>
-            </div>
-          ` : ''}
-
-          <div id="terminal" class="${this.menu ? '' : 'no-menu'}">
-            ${this.commands.map((command) => html`
-              <utils-command .value="${command}"
-                @processed="${() => this.focus()}">
-              </utils-command>
-            `)}
-            <utils-terminal-input
-              id="input"
-              .value="${this.value}"
-              @submit="${({ detail }) => this.add(detail.value, detail.ignore)}">
-            </utils-terminal-input>
-          </div>
-          <utils-icon class="share" icon="share" @click="${this.copy}"></utils-icon>
-        </div>
+        <utils-terminal-window id="window" @zoom="${this.toggleFullScreen}" menu>
+          ${this.commands.map((command) => html`
+            <utils-command .value="${command}"
+              @processed="${() => this.focus()}">
+            </utils-command>
+          `)}
+          <utils-terminal-input
+            id="input"
+            .value="${this.value}"
+            @submit="${({ detail }) => this.add(detail.value, detail.ignore)}">
+          </utils-terminal-input>
+          <utils-icon slot="window" class="share" icon="share" @click="${this.copy}"></utils-icon>
+        </utils-terminal-window>
       </utils-resizer>
     `;
   }
@@ -237,14 +151,14 @@ class Terminal extends CopyMixin(LitElement) {
   add(command, ignore) {
     if (!command || !command.trim()) {
       this.commands.push('');
-      this.requestUpdate();
+      this.requestUpdate('commands');
     } else if (['clear'].includes(command.trim())) {
       this.commands = [];
 
       if (!ignore) History.add(command.trim());
     } else {
       this.commands.push(command);
-      this.requestUpdate();
+      this.requestUpdate('commands');
 
       if (!ignore) History.add(command.trim());
     }
@@ -258,14 +172,6 @@ class Terminal extends CopyMixin(LitElement) {
     return this._window;
   }
 
-  get terminalElement() {
-    if (!this._terminal) {
-      this._terminal = this.shadowRoot.getElementById('terminal');
-    }
-
-    return this._terminal;
-  }
-
   get input() {
     if (!this._input) {
       this._input = this.shadowRoot.getElementById('input');
@@ -276,11 +182,11 @@ class Terminal extends CopyMixin(LitElement) {
 
   focus() {
     this.input.focus();
-    this.terminalElement.scrollTop = this.terminalElement.scrollHeight;
+    this.window.scrollToBottom();
   }
 
   copy() {
-    const url = new URL(location.origin);
+    const url = new URL(`${location.origin}${location.pathname}`);
 
     url.searchParams.append('cmd', btoa(JSON.stringify(this.commands)));
 

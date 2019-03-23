@@ -19,6 +19,24 @@ class App extends LitElement {
         min-height: 100vh;
       }
 
+      h1, h2, h3 {
+        margin: 0 auto;
+        text-align: center;
+        line-height: 1;
+      }
+
+      h1 {
+        font-size: 3em;
+        font-weight: normal;
+        margin-top: 40px;
+      }
+
+      h2 {
+        margin: 20px;
+        font-family: 'Roboto Slab', serif;
+        font-weight: lighter;
+      }
+
       salte-pages {
         flex: 1;
       }
@@ -34,8 +52,12 @@ class App extends LitElement {
     return html`
       <utils-bubbles></utils-bubbles>
 
-      <salte-pages selected="${this.page}" fallback="404" @load="${this.load}">
+      <h1>utils.gg</h1>
+      <h2>Local only implementation of your favorite tools.</h2>
+
+      <salte-pages selected="${this.page}" fallback="404" @load="${this.load}" @loaded="${this.onLoaded}">
         <utils-page-home page="home"></utils-page-home>
+        <utils-page-terminal page="terminal"></utils-page-terminal>
         <utils-page-pipes page="pipes"></utils-page-pipes>
         <utils-page-404 page="404"></utils-page-404>
       </salte-pages>
@@ -87,6 +109,9 @@ class App extends LitElement {
       case 'home':
         promise = import('@utils/src/pages/utils-page-home.js');
         break;
+      case 'terminal':
+        promise = import('@utils/src/pages/utils-page-terminal.js');
+        break;
       case 'pipes':
         promise = import('@utils/src/pages/utils-page-pipes.js');
         break;
@@ -100,6 +125,12 @@ class App extends LitElement {
     }).catch((error) => {
       console.error(error);
     });
+  }
+
+  onLoaded({ detail: page }) {
+    const selectedPage = this.shadowRoot.querySelector(`[page="${page}"]`);
+
+    document.title = `${selectedPage.header} • Utils`
   }
 }
 

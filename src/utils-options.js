@@ -22,17 +22,33 @@ class Option extends LitElement {
       }
 
       #selection {
+        position: relative;
         padding: 15px 20px;
         border-radius: 5px;
 
-        background: rgba(0, 0, 0, 0.2);
+        background: #2f3640;
         transition: 0.15s ease-in-out;
         transition-property: background-color;
         cursor: pointer;
       }
 
-      #selection:hover {
-        background: rgba(255, 255, 255, 0.2);
+      #selection:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+        background: white;
+
+        opacity: 0;
+        transition: 0.15s ease-in-out;
+        transition-property: opacity;
+      }
+
+      #selection:hover:before {
+        opacity: 0.1;
       }
 
       #options {
