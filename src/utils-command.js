@@ -19,14 +19,7 @@ class Command extends CopyMixin(LitElement) {
       }
 
       .command {
-        padding-left: 20px;
         line-height: 1.5;
-      }
-
-      .command:before {
-        content: '$';
-        position: absolute;
-        left: 0;
       }
 
       .output {
@@ -46,7 +39,10 @@ class Command extends CopyMixin(LitElement) {
 
   render() {
     return html`
-      <div class="command ${this.terminal ? '' : 'copy'}" @click="${() => this.copy(this.value)}">${this.value}</div>
+      <div class="command ${this.terminal ? '' : 'copy'}"
+        @click="${() => this.copy(this.value)}">
+        $ <span>${this.value}</span>
+      </div>
       ${this.output ? html`
         <div class="output copy" @click="${() => this.copy(this.output)}">${unsafeHTML(this.output)}</div>
       ` : ''}
