@@ -93,12 +93,10 @@ class App extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     document.body.removeAttribute('unresolved');
-    page('*', (context, next) => {
+    page('*', (context) => {
       const [_dummy, page] = context.path.match(/^\/([^/?]+)?/);
 
       this.page = page || 'home';
-
-      next();
     });
     page();
   }

@@ -1,19 +1,21 @@
 import 'web-animations-js/web-animations-next-lite.min.js';
 import 'url-polyfill';
 
-import page from 'page';
-
 export function PageMixin(superClass) {
   return class extends superClass {
     static get properties() {
       return {
-        search: Object
+        search: Object,
+
+        selected: {
+          type: Boolean,
+          reflect: true
+        }
       };
     }
 
-    connectedCallback() {
-      super.connectedCallback();
-      page('*', (context, next) => {
+    updated(changedProperties) {
+      if (changedProperties.has('selected') && this.selected) {
         const url = new URL(location.href);
 
         const search = {};
@@ -27,9 +29,7 @@ export function PageMixin(superClass) {
           }
         });
         this.search = search;
-        next();
-      });
-      page();
+      }
     }
 
     show(animate) {
