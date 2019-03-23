@@ -21,6 +21,7 @@
     "page": "^1.11.4",
     "promise.prototype.finally": "^3.1.0",
     "sql-formatter": "^2.3.2",
+    "typeit": "^6.0.2",
     "url-polyfill": "^1.1.5",
     "web-animations-js": "^2.3.1",
     "yargs-parser": "^13.0.0"

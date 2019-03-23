@@ -116,11 +116,11 @@ class Resizer extends LitElement {
 
   resize(e) {
     if (this.any(this.resizer, 'e', 'se')) {
-      this.width = e.pageX - this.getBoundingClientRect().left;
+      this.width = e.clientX - this.getBoundingClientRect().left;
     }
 
     if (this.any(this.resizer, 's', 'se')) {
-      this.height = e.pageY - this.getBoundingClientRect().top;
+      this.height = e.clientY - this.getBoundingClientRect().top;
     }
   }
 
