@@ -127,6 +127,20 @@ class Option extends LitElement {
         document.removeEventListener('click', this._close);
       }
     }
+
+    if (changedProperties.has('selected')) {
+      const previousSelected = this.element(changedProperties.get('selected'));
+
+      if (previousSelected) {
+        previousSelected.classList.remove('selected');
+      }
+
+      const selected = this.element(this.selected);
+
+      if (selected) {
+        selected.classList.add('selected');
+      }
+    }
   }
 
   toggle() {
@@ -150,20 +164,17 @@ class Option extends LitElement {
   }
 
   select({ target }) {
-    const previousSelected = this.querySelector(`[${this.attrForSelected}="${this.selected}"]`);
-
-    if (previousSelected) {
-      previousSelected.classList.remove('selected');
-    }
-
-    target.classList.add('selected');
-
     this.selected = this.value(target);
 
     this.dispatchEvent(new CustomEvent('change', {
       detail: this.selected
     }));
+
     this.close();
+  }
+
+  element(value) {
+    return this.querySelector(`[${this.attrForSelected}="${value}"]`);
   }
 
   value(element) {

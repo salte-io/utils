@@ -30,6 +30,11 @@ class Pipe extends LitElement {
         margin: 0;
         padding: 15px 20px;
       }
+
+      .output {
+        font-size: 16px;
+        font-family: monospace;
+      }
     `;
   }
 
@@ -59,7 +64,7 @@ class Pipe extends LitElement {
 
           <h3>Output</h3>
 
-          <utils-textarea readonly .value="${this.output}"></utils-textarea>
+          <utils-textarea class="output" readonly .value="${this.output}"></utils-textarea>
         ` : ''}
       </utils-card>
     `;
