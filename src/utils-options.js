@@ -41,6 +41,7 @@ class Option extends LitElement {
         bottom: 0;
         pointer-events: none;
         background: white;
+        user-select: none;
 
         opacity: 0;
         transition: 0.15s ease-in-out;
@@ -51,42 +52,21 @@ class Option extends LitElement {
         opacity: 0.1;
       }
 
-      #options {
-        position: absolute;
-        z-index: 1;
-        top: 100%;
-        left: 0;
-        background: rgba(0, 0, 0, 0.6);
-        border-radius: 5px;
-        max-height: calc(46px * 4);
-        min-width: 100%;
-        overflow: auto;
-
-        pointer-events: none;
-        opacity: 0;
-        transition: 0.15s ease-in-out;
-        transition-property: opacity;
-      }
-
-      :host([opened]) #options {
-        pointer-events: all;
-        opacity: 1;
-      }
-
-      #options ::slotted(*) {
-        padding: 15px 20px;
-        cursor: pointer;
-
-        transition: 0.15s ease-in-out;
-        transition-property: background-color;
-      }
-
-      #options ::slotted(.selected) {
+      utils-dropdown ::slotted(.selected) {
         font-style: italic;
       }
 
-      #options ::slotted(*:hover) {
-        background: rgba(255, 255, 255, 0.2);
+      utils-dropdown {
+        position: initial;
+      }
+
+      .end {
+        display: flex;
+        align-self: end;
+      }
+
+      .end > ::slotted(*) {
+        margin-right: 10px;
       }
     `;
   }
@@ -94,9 +74,12 @@ class Option extends LitElement {
   render() {
     return html`
       <label>${this.label}</label>
-      <div id="selection" @click="${this.toggle}">${this.selected || this.placeholder}</div>
-      <div id="options" @click="${this.select}">
-        <slot></slot>
+      <div class="end">
+        <slot name="secondary"></slot>
+        <utils-dropdown @select="${this.select}">
+          <utils-button slot="trigger" theme="dark">${this.selected || this.placeholder}</utils-button>
+          <slot></slot>
+        </utils-dropdown>
       </div>
     `;
   }
@@ -116,11 +99,6 @@ class Option extends LitElement {
         type: String,
         reflect: true,
         attribute: 'attr-for-selected'
-      },
-
-      opened: {
-        type: Boolean,
-        reflect: true
       }
     }
   }
@@ -128,22 +106,11 @@ class Option extends LitElement {
   constructor() {
     super();
 
-    this._close = this._close.bind(this);
     this.attrForSelected = 'value';
     this.placeholder = 'Select an option...';
   }
 
   updated(changedProperties) {
-    if (changedProperties.has('opened')) {
-      if (this.opened) {
-        this.updateComplete.then(() => {
-          document.addEventListener('click', this._close);
-        });
-      } else {
-        document.removeEventListener('click', this._close);
-      }
-    }
-
     if (changedProperties.has('selected')) {
       const previousSelected = this.element(changedProperties.get('selected'));
 
@@ -159,34 +126,12 @@ class Option extends LitElement {
     }
   }
 
-  toggle() {
-    this.opened = !this.opened;
-  }
-
-  open() {
-    this.opened = true;
-  }
-
-  close() {
-    this.opened = false;
-  }
-
-  _close(e) {
-    const path = e.path || (e.composedPath && e.composedPath());
-
-    if (path.includes(this.selection) || path.includes(this.options)) return;
-
-    this.close();
-  }
-
-  select({ target }) {
-    this.selected = this.value(target);
+  select({ detail: selectedElement }) {
+    this.selected = this.value(selectedElement);
 
     this.dispatchEvent(new CustomEvent('change', {
       detail: this.selected
     }));
-
-    this.close();
   }
 
   element(value) {
@@ -203,14 +148,6 @@ class Option extends LitElement {
     }
 
     return this._selection;
-  }
-
-  get options() {
-    if (!this._options) {
-      this._options = this.shadowRoot.getElementById('options');
-    }
-
-    return this._options;
   }
 }
 

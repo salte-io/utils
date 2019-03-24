@@ -47,10 +47,18 @@ class Pipes extends PageMixin(LitElement) {
       </utils-card>
 
       ${repeat(this.pipes, (pipe, i) => html`
-        <utils-pipe .commandName="${pipe}" .input="${i === 0 ? this.input : this.outputs[i - 1]}" @change="${({ detail }) => {
-          this.outputs[i] = detail;
-          this.requestUpdate('outputs');
-        }}"></utils-pipe>
+        <utils-pipe
+          .commandName="${pipe}"
+          .input="${i === 0 ? this.input : this.outputs[i - 1]}"
+          @change="${({ detail }) => {
+            this.outputs[i] = detail;
+            this.requestUpdate('outputs');
+          }}"
+          @delete="${() => {
+            this.pipes.splice(i, 1);
+            this.requestUpdate('pipes');
+          }}">
+        </utils-pipe>
       `)}
 
       <utils-pipe create @create="${({ detail }) => {
