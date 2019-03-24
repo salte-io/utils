@@ -7,6 +7,8 @@ import { version } from '@utils/package.json';
 
 import '@utils/src/dynamic/utils-bubbles.js';
 import '@utils/src/utils-footer.js';
+import '@utils/src/utils-dropdown.js';
+import '@utils/src/utils-button.js';
 import '@utils/src/events/optimized.js';
 
 @customElement('utils-app')
@@ -44,6 +46,17 @@ class App extends LitElement {
       a {
         color: inherit;
         outline: none;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      #menu {
+        position: absolute;
+        top: 20px;
+        left: 20px;
       }
     `;
   }
@@ -52,7 +65,7 @@ class App extends LitElement {
     return html`
       <utils-bubbles></utils-bubbles>
 
-      <h1>utils.gg</h1>
+      <h1><a href="/">utils.gg</a></h1>
       <h2>Local only implementation of your favorite tools.</h2>
 
       <salte-pages selected="${this.page}" fallback="404" @load="${this.load}" @loaded="${this.onLoaded}">

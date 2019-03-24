@@ -6,7 +6,8 @@ import { LitElement, html, css, customElement } from 'lit-element';
 // by merely mentioning the word. :O
 
 const icons = {
-  share: fs.readFileSync('./images/icons/share.svg', 'UTF8')
+  share: fs.readFileSync('./images/icons/share.svg', 'UTF8'),
+  delete: fs.readFileSync('./images/icons/delete.svg', 'UTF8')
 };
 
 @customElement('utils-icon')

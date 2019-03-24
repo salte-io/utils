@@ -5,12 +5,13 @@ class Button extends LitElement {
   static get styles() {
     return css`
       :host {
-        padding: 5px 20px;
-        border-radius: 3px;
+        padding: 15px 20px;
+        border-radius: 5px;
         cursor: pointer;
 
-        color: #fafafa;
-        border: 1px solid #fafafa;
+        color: var(--utils-button-color);
+        background: var(--utils-button-background-color);
+        border: 1px solid var(--utils-button-border-color);
 
         transition: 0.15s ease-in-out;
         transition-property: background-color, color;
@@ -18,8 +19,8 @@ class Button extends LitElement {
 
       :host(:hover),
       :host([checked]) {
-        background: #fafafa;
-        color: #1B1D23;
+        background: var(--utils-button-active-background-color);
+        color: var(--utils-button-active-color);
       }
     `;
   }
@@ -40,8 +41,45 @@ class Button extends LitElement {
       checkable: {
         type: Boolean,
         reflect: true
+      },
+
+      theme: {
+        type: String,
+        reflect: true
       }
     };
+  }
+
+  constructor() {
+    super();
+
+    this.themes = {
+      light: {
+        '--utils-button-background-color': 'transparent',
+        '--utils-button-color': '#fafafa',
+        '--utils-button-border-color': '#fafafa',
+        '--utils-button-active-background-color': '#fafafa',
+        '--utils-button-active-color': '#1B1D23'
+      },
+
+      dark: {
+        '--utils-button-background-color': '#2f3640',
+        '--utils-button-color': '#fafafa',
+        '--utils-button-border-color': 'transparent',
+        '--utils-button-active-background-color': '#49505A',
+        '--utils-button-active-color': '#fafafa'
+      },
+
+      delete: {
+        '--utils-button-background-color': 'transparent',
+        '--utils-button-color': '#FF5B32',
+        '--utils-button-border-color': '#FF5B32',
+        '--utils-button-active-background-color': '#FF5B32',
+        '--utils-button-active-color': '#fafafa'
+      }
+    };
+
+    this.theme = 'light';
   }
 
   updated(changedProperties) {
@@ -51,6 +89,14 @@ class Button extends LitElement {
       } else {
         this.removeEventListener('click', this.onCheck);
       }
+    }
+
+    if (changedProperties.has('theme')) {
+      const theme = this.themes[this.theme] || this.themes['light'];
+
+      Object.keys(theme).forEach((key) => {
+        this.style.setProperty(key, theme[key]);
+      });
     }
   }
 

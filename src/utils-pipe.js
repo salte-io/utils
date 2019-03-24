@@ -7,6 +7,8 @@ import '@utils/src/utils-card.js';
 import '@utils/src/utils-options.js';
 import '@utils/src/utils-input.js';
 import '@utils/src/utils-checkbox.js';
+import '@utils/src/utils-button.js';
+import '@utils/src/utils-icon.js';
 
 @customElement('utils-pipe')
 class Pipe extends LitElement {
@@ -46,6 +48,14 @@ class Pipe extends LitElement {
           .selected="${this.commandName}"
           placeholder="Select a Pipe!"
           @change="${this.onCommandChange}">
+          ${this.commandName ? html`
+            <utils-button
+              slot="secondary"
+              theme="delete"
+              @click="${this.onDelete}">
+              <utils-icon icon="delete"></utils-icon>
+            </utils-button>
+          ` : ''}
           ${this.commands.map((command) => html`
             <div value="${command.name}">${command.name} - ${command.cli.info.description}</div>
           `)}
@@ -185,6 +195,10 @@ class Pipe extends LitElement {
     } else {
       this.commandName = e.detail;
     }
+  }
+
+  onDelete() {
+    this.dispatchEvent(new CustomEvent('delete'));
   }
 }
 
