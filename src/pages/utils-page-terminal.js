@@ -1,13 +1,14 @@
 import { LitElement, html, css, customElement } from 'lit-element';
 
-import { Commands } from '@utils/src/commands';
 import { PageMixin } from '@utils/src/mixins/utils-pages.js';
+import { TypeMixin } from '@utils/src/mixins/utils-type.js';
+import { RandomMixin } from '@utils/src/mixins/utils-random.js';
 
 import '@utils/src/utils-terminal.js';
 import '@utils/src/utils-button.js';
 
 @customElement('utils-page-terminal')
-class Terminal extends PageMixin(LitElement) {
+class Terminal extends RandomMixin(TypeMixin(PageMixin(LitElement))) {
   static get styles() {
     return css`
       :host {
@@ -45,6 +46,11 @@ class Terminal extends PageMixin(LitElement) {
         row-gap: 10px;
         column-gap: 10px;
       }
+
+      #tips {
+        padding: 10px;
+        margin: auto;
+      }
     `;
   }
 
@@ -57,31 +63,7 @@ class Terminal extends PageMixin(LitElement) {
       <utils-terminal
         id="terminal" menu>
       </utils-terminal>
-      <div class="documentation">
-        <div class="utils">
-          <h3>Quick Help</h3>
-          <div class="buttons">
-            ${this.utils.map((util) => html`
-              <utils-button @click="${() => {
-                this.terminal.add(`${util} --help`);
-                this.terminal.focus();
-              }}">${util}</utils-button>
-            `)}
-          </div>
-        </div>
-        <div class="examples">
-          <h3>Examples</h3>
-          <div class="buttons">
-            ${this.examples.map((example) => html`
-              <utils-button @click="${() => {
-                this.terminal.add('clear');
-                this.terminal.add(example.script);
-                this.terminal.focus();
-              }}">${example.name}</utils-button>
-            `)}
-          </div>
-        </div>
-      </div>
+      <div id="tips"></div>
     `;
   }
 
@@ -90,6 +72,44 @@ class Terminal extends PageMixin(LitElement) {
       value: String,
       utils: Array
     };
+  }
+
+  constructor() {
+    super();
+
+    this.previousTips = [];
+    this.tips = [
+      'Try typing "help" to see a list of available commands!',
+      'View your previous commands with "history"!',
+      'Tired of manually entering input with echo? Checkout "clippaste"!'
+    ];
+  }
+
+  firstUpdated() {
+    this.recursiveShowTip();
+  }
+
+  recursiveShowTip() {
+    const tip = this.pseudoRandomItem(this.tips, this.previousTips);
+    this.previousTips.push(tip);
+
+    if (this.previousTips.length === this.tips.length) {
+      this.previousTips.splice(0, 1);
+    }
+
+    this.showTip(tip).then(() => {
+      this.recursiveShowTip();
+    });
+  }
+
+  async showTip(tip) {
+    const instance = await this.type({
+      element: this.tipsElement,
+      text: tip
+    });
+
+    await this.wait(2000);
+    instance.empty();
   }
 
   updated(changedProperties) {
@@ -104,33 +124,20 @@ class Terminal extends PageMixin(LitElement) {
     }
   }
 
-  constructor() {
-    super();
-
-    this.value = null;
-    this.utils = Commands.commands.map((command) => command.name);
-
-    this.examples = [{
-      name: 'Encode a value as a MD5 Hash',
-      script: 'echo -n "my-password" | md5'
-    }, {
-      name: 'Base64 Encode',
-      script: 'echo -n "<user>:<password>" | base64'
-    }, {
-      name: 'Base64 Decode',
-      script: 'echo -n "PHVzZXI+OjxwYXNzd29yZD4K" | base64 --decode'
-    }, {
-      name: 'SHASUM (256) Encode',
-      script: 'echo -n "test" | shasum -a 256'
-    }];
-  }
-
   get terminal() {
     if (!this._terminal) {
       this._terminal = this.shadowRoot.getElementById('terminal');
     }
 
     return this._terminal;
+  }
+
+  get tipsElement() {
+    if (!this._tipsElement) {
+      this._tipsElement = this.shadowRoot.getElementById('tips');
+    }
+
+    return this._tipsElement;
   }
 }
 

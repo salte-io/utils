@@ -15,7 +15,7 @@ export default class CLI {
     return false;
   }
 
-  static process(args) {
+  static process({ args }) {
     if (args._[0] === 'clear') {
       History.clear();
       return 'History cleared.';

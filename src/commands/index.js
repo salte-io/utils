@@ -96,7 +96,7 @@ export class Commands {
       `
     }
 
-    return cli.process(args, input);
+    return cli.process({ args, input, commands: this.commands });
   }
 
   static async command(name) {

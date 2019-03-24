@@ -23,7 +23,7 @@ export default class CLI {
     return true;
   }
 
-  static process(args, input) {
+  static process({ args, input }) {
     try {
       return JSON.stringify(JSON.parse(input), {
         tabs: '\t',

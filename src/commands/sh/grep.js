@@ -12,7 +12,7 @@ export default class CLI {
     return false; // TODO: Add support for providing input to CLIs via pipes
   }
 
-  static process(args, input) {
+  static process({ args, input }) {
     if (args._.length) {
       return input.split('\n').filter((line) => {
         return line.includes(args._.join(' '));

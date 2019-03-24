@@ -11,7 +11,7 @@ export default class CLI {
     return true;
   }
 
-  static process(args, input) {
+  static process({ input }) {
     return MD5(input).toString();
   }
 }
