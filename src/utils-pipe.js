@@ -105,7 +105,7 @@ class Pipe extends LitElement {
         }, {});
 
         try {
-          this.output = await this.command.cli.process(args, this.input);
+          this.output = await this.command.cli.process({ args, input: this.input });
           this.dispatchEvent(new CustomEvent('change', {
             detail: this.output
           }));
