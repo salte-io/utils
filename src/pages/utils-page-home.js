@@ -1,14 +1,15 @@
 import { LitElement, html, css, customElement } from 'lit-element';
-import TypeIt from 'typeit';
 
 import { PageMixin } from '@utils/src/mixins/utils-pages.js';
+import { TypeMixin } from '@utils/src/mixins/utils-type.js';
+import { RandomMixin } from '@utils/src/mixins/utils-random.js';
 
 import '@utils/src/utils-card.js';
 import '@utils/src/utils-terminal-window.js';
 import '@utils/src/utils-command.js';
 
 @customElement('utils-page-home')
-class Home extends PageMixin(LitElement) {
+class Home extends RandomMixin(TypeMixin(PageMixin(LitElement))) {
   static get styles() {
     return css`
       :host {
@@ -121,15 +122,15 @@ class Home extends PageMixin(LitElement) {
   }
 
   firstUpdated() {
-    this.randomlyEnterCommandOnInterval(3000);
+    this.randomlyEnterCommandOnInterval();
   }
 
   randomlyEnterCommandOnInterval() {
-    const command = this.randomCommand(this.previousCommands);
+    const command = this.pseudoRandomItem(this.commands, this.previousCommands);
     this.previousCommands.push(command);
 
     if (this.previousCommands.length === this.commands.length) {
-      this.previousCommands = [];
+      this.previousCommands.splice(0, 1);
     }
 
     this.enterCommand(command).then(() => {
@@ -137,43 +138,24 @@ class Home extends PageMixin(LitElement) {
     });
   }
 
-  randomCommand(previousCommands) {
-    const random = Math.floor(Math.random() * this.commands.length);
-
-    if (previousCommands.includes(this.commands[random])) {
-      return this.randomCommand(previousCommands);
-    }
-
-    return this.commands[random];
-  }
-
   async enterCommand(command) {
-    let instance = await this.type(command);
+    let instance = await this.type({
+      element: this.typeit,
+      text: command
+    });
 
     instance.empty();
     this.command = command;
 
     await this.wait(1000);
 
-    instance = await this.type('clear');
+    instance = await this.type({
+      element: this.typeit,
+      text: 'clear'
+    });
 
     instance.empty();
     this.command = null;
-  }
-
-  type(command) {
-    return new Promise((resolve) => {
-      new TypeIt(this.typeit, { afterComplete: resolve })
-        .options({ speed: 50 })
-        .type(command)
-        .pause(100)
-        .break()
-        .go();
-    });
-  }
-
-  wait(timeout) {
-    return new Promise((resolve) => setTimeout(resolve, timeout));
   }
 
   get typeit() {

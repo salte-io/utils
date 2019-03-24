@@ -7,6 +7,12 @@ export default class CLI {
     };
   }
 
+  static get unsupported() {
+    if (navigator.clipboard && navigator.clipboard.readText) return false;
+
+    return `Browser doesn't support reading the clipboard.`;
+  }
+
   static get pipes() {
     return false;
   }

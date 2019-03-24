@@ -24,7 +24,7 @@ export default class CLI {
     return true;
   }
 
-  static async process(args, input) {
+  static async process({ args, input }) {
     switch (args.algorithm) {
       case '224': return SHA224(input).toString();
       case '256': return await SHA256(input).toString();

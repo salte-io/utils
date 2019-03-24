@@ -15,7 +15,7 @@ export default class CLI {
     return false;
   }
 
-  static process(args) {
+  static process({ args }) {
     return `${args._.join(' ')}${args.n ? '' : '\n'}`;
   }
 }
