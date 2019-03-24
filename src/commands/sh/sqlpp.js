@@ -32,7 +32,7 @@ export default class CLI {
     return true;
   }
 
-  static process(args, input) {
+  static process({ args, input }) {
     return formatter.format(input, {
       language: args.language,
       indent: (args.indent === 'spaces' ? ' ' : '\t').repeat(args.number)

@@ -16,7 +16,7 @@ export default class CLI {
     return true;
   }
 
-  static process(args, input) {
+  static process({ args, input }) {
     if (args.decode) {
       return atob(input);
     }
