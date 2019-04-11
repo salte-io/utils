@@ -7,6 +7,7 @@ import SHA512 from 'crypto-js/sha512';
 export default class CLI {
   static get info() {
     return {
+      name: 'shasum',
       usage: '[OPTION]...',
       description: 'Print SHA checksums.',
       args: [{

@@ -1,6 +1,7 @@
 export default class CLI {
   static get info() {
     return {
+      name: 'base64',
       usage: '[-D]',
       description: 'Encode and decode using Base64 representation',
       args: [{

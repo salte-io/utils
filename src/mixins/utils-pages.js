@@ -1,4 +1,4 @@
-import 'web-animations-js/web-animations-next-lite.min.js';
+// import 'web-animations-js/web-animations-next-lite.min.js';
 import 'url-polyfill';
 
 export function PageMixin(superClass) {

@@ -30,23 +30,33 @@
     "@babel/core": "^7.3.4",
     "@babel/plugin-proposal-class-properties": "^7.3.4",
     "@babel/plugin-proposal-decorators": "^7.3.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/preset-stage-1": "^7.0.0",
     "babel-eslint": "^10.0.1",
-    "babel-plugin-istanbul": "^5.1.0",
     "babel-plugin-module-resolver": "^3.2.0",
     "cross-env": "^5.2.0",
     "eslint": "^5.15.1",
     "eslint-plugin-compat": "^3.0.1",
     "nps": "^5.9.4",
-    "parcel-bundler": "^1.12.0",
-    "parcel-plugin-markdown-string": "^1.3.1"
+    "rollup": "^1.10.0",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-commonjs": "^9.3.4",
+    "rollup-plugin-copy-assets-to": "^1.0.0",
+    "rollup-plugin-glob": "^1.0.2",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-globals": "^1.4.0",
+    "rollup-plugin-node-resolve": "^4.2.3",
+    "rollup-plugin-serve": "^1.0.1",
+    "rollup-plugin-terser": "^4.0.4",
+    "rollup-plugin-url": "^2.2.1"
   },
   "browserslist": [
     "last 2 Chrome versions",
     "last 2 Firefox versions",
     "last 2 Safari versions",
-    "last 2 Edge versions"
-  ],
-  "sw-precache": {
-    "skipWaiting": true
-  }
+    "last 2 Edge versions",
+    "IE 11"
+  ]
 }

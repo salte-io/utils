@@ -3,6 +3,7 @@ import { History } from '@utils/src/storage/history.js';
 export default class CLI {
   static get info() {
     return {
+      name: 'history',
       description: 'outputs the current history',
       commands: [{
         name: 'clear',

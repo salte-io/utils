@@ -4,10 +4,10 @@ import { Parser } from '@utils/src/commands/utils/parser.js';
 
 import commandModules from '@utils/src/commands/sh/*.js';
 
-const commands = Object.keys(commandModules).map((name) => ({
-  name,
-  aliases: [name].concat(commandModules[name].aliases || []),
-  cli: commandModules[name].default
+const commands = commandModules.map((command) => ({
+  name: command.info.name,
+  aliases: [command.info.name].concat(command.aliases || []),
+  cli: command
 }));
 
 export class Commands {

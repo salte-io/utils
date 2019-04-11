@@ -3,6 +3,7 @@ import formatter from 'sql-formatter';
 export default class CLI {
   static get info() {
     return {
+      name: 'sqlpp',
       description: 'Pretty prints the sql provided by stdin.',
       args: [{
         name: 'language',

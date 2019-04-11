@@ -115,6 +115,7 @@ class App extends LitElement {
   }
 
   load({ detail: page }) {
+    console.log(page);
     let promise = null;
     switch (page) {
       case 'home':

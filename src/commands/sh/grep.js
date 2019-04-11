@@ -3,6 +3,7 @@ import { chalk } from '@utils/src/commands/utils/chalk.js'
 export default class CLI {
   static get info() {
     return {
+      name: 'grep',
       usage: '[pattern]',
       description: 'file pattern searcher'
     };

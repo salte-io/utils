@@ -7,6 +7,7 @@ import { RandomMixin } from '@utils/src/mixins/utils-random.js';
 import '@utils/src/utils-card.js';
 import '@utils/src/utils-terminal-window.js';
 import '@utils/src/utils-command.js';
+import pipesImage from '../../images/pipes.svg';
 
 @customElement('utils-page-home')
 class Home extends RandomMixin(TypeMixin(PageMixin(LitElement))) {
@@ -94,7 +95,7 @@ class Home extends RandomMixin(TypeMixin(PageMixin(LitElement))) {
         </a>
         <a class="tool" href="/pipes">
           <utils-card>
-            <img class="pipes" src="${require('@utils/images/pipes.svg')}">
+            <img class="pipes" src="${pipesImage}">
           </utils-card>
           <div class="hover">Launch<br>Pipes GUI</div>
         </a>

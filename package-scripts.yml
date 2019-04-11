@@ -13,10 +13,10 @@ scripts:
       script: karma start karma.ci.conf.js
       description: Executes the Test Suite on Sauce Labs
   serve:
-    script: cross-env NODE_ENVIRONMENT=development parcel index.html --port 8081
+    script: rm -rf dist && rollup -w -c rollup.serve.config.js
     description: Starts a server at http://localhost:8081
   build:
-    script: rm -rf dist && parcel build index.html && cp CNAME dist/CNAME
+    script: rm -rf dist && rollup -c
     description: Build the Application
   report-coverage:
     script: coveralls < coverage/lcov.info

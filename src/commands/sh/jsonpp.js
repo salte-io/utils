@@ -1,6 +1,7 @@
 export default class CLI {
   static get info() {
     return {
+      name: 'jsonpp',
       description: 'Pretty prints the json provided by stdin.',
       args: [{
         name: 'indent',

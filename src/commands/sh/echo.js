@@ -1,6 +1,7 @@
 export default class CLI {
   static get info() {
     return {
+      name: 'echo',
       usage: '[SHORT-OPTION]... [STRING]...',
       description: 'write arguments to the standard output',
       args: [{
