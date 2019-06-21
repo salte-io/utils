@@ -69,7 +69,7 @@ class Command extends CopyMixin(LitElement) {
     if (changedProperties.has('value') && !this.terminal) {
       this.process(this.value).then((output) => {
         const convert = new Convert();
-        this.output = convert.toHtml(output || '');
+        this.output = convert.toHtml(this.escape(output) || '');
         this.requestUpdate();
 
         setTimeout(window.requestAnimationFrame(() => {
@@ -77,6 +77,14 @@ class Command extends CopyMixin(LitElement) {
         }));
       });
     }
+  }
+
+  escape(markup) {
+    return markup.replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&apos;');
   }
 
   async process(value) {
