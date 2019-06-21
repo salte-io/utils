@@ -1,4 +1,7 @@
 scripts:
+  default:
+    script: cross-env NODE_ENVIRONMENT=development parcel index.html --port 8081
+    description: Starts a server at http://localhost:8081
   lint:
     script: eslint src/**/*.js
     description: Checks for any formatting errors
@@ -12,9 +15,6 @@ scripts:
     sauce:
       script: karma start karma.ci.conf.js
       description: Executes the Test Suite on Sauce Labs
-  serve:
-    script: cross-env NODE_ENVIRONMENT=development parcel index.html --port 8081
-    description: Starts a server at http://localhost:8081
   build:
     script: rm -rf dist && parcel build index.html && cp CNAME dist/CNAME
     description: Build the Application
