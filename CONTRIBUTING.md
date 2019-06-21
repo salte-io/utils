@@ -6,7 +6,7 @@
 # Install the Packages!
 $ npm install
 # Start the server at http://localhost:8081
-$ npm start serve
+$ npm start
 ```
 
 ## Creating a `cli`
