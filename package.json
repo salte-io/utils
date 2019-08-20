@@ -14,7 +14,7 @@
     "clipboard-polyfill": "^2.7.0",
     "crypto-js": "^3.1.9-1",
     "highlight.js": "^9.15.6",
-    "keycode-js": "^1.0.4",
+    "keycode-js": "^2.0.0",
     "lit-element": "^2.0.1",
     "node-uuid": "^1.4.8",
     "outdent": "^0.7.0",
