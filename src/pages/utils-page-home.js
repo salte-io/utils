@@ -31,6 +31,7 @@ class Home extends RandomMixin(TypeMixin(PageMixin(LitElement))) {
         display: flex;
         flex-direction: column;
         position: relative;
+        min-height: 300px;
       }
 
       .tool > * {
