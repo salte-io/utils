@@ -22,7 +22,7 @@
     "pretty-data": "^0.40.0",
     "promise.prototype.finally": "^3.1.1",
     "sql-formatter": "^2.3.3",
-    "typeit": "^6.0.3",
+    "typeit": "^7.0.1",
     "url-polyfill": "^1.1.7",
     "web-animations-js": "^2.3.2",
     "yargs-parser": "^17.0.0"
