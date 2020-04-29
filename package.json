@@ -8,8 +8,8 @@
   },
   "dependencies": {
     "@salte-io/salte-pages": "^1.0.1",
-    "@webcomponents/webcomponentsjs": "^2.2.10",
-    "ansi-to-html": "^0.6.11",
+    "@webcomponents/webcomponentsjs": "^2.4.3",
+    "ansi-to-html": "^0.6.14",
     "chalk": "^3.0.0",
     "clipboard-polyfill": "^2.8.6",
     "crypto-js": "^4.0.0",
@@ -18,11 +18,11 @@
     "lit-element": "^2.2.1",
     "node-uuid": "^1.4.8",
     "outdent": "^0.7.0",
-    "page": "^1.11.4",
+    "page": "^1.11.6",
     "pretty-data": "^0.40.0",
     "promise.prototype.finally": "^3.1.1",
     "sql-formatter": "^2.3.3",
-    "typeit": "^6.0.3",
+    "typeit": "^7.0.3",
     "url-polyfill": "^1.1.8",
     "web-animations-js": "^2.3.2",
     "yargs-parser": "^17.0.0"
@@ -30,16 +30,16 @@
   "devDependencies": {
     "@babel/core": "^7.6.0",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
-    "@babel/plugin-proposal-decorators": "^7.6.0",
+    "@babel/plugin-proposal-decorators": "^7.8.3",
     "babel-eslint": "^10.0.3",
     "babel-plugin-istanbul": "^6.0.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "cross-env": "^7.0.0",
-    "eslint": "^6.3.0",
+    "eslint": "^6.8.0",
     "eslint-plugin-compat": "^3.3.0",
     "nps": "^5.9.8",
     "parcel-bundler": "^1.12.3",
-    "parcel-plugin-markdown-string": "^1.4.0"
+    "parcel-plugin-markdown-string": "^1.4.2"
   },
   "browserslist": [
     "last 2 Chrome versions",
