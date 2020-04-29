@@ -23,7 +23,7 @@
     "promise.prototype.finally": "^3.1.2",
     "sql-formatter": "^2.3.3",
     "typeit": "^7.0.3",
-    "url-polyfill": "^1.1.7",
+    "url-polyfill": "^1.1.8",
     "web-animations-js": "^2.3.2",
     "yargs-parser": "^17.0.0"
   },
