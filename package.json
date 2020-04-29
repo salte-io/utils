@@ -13,7 +13,7 @@
     "chalk": "^3.0.0",
     "clipboard-polyfill": "^2.8.6",
     "crypto-js": "^4.0.0",
-    "highlight.js": "^9.15.10",
+    "highlight.js": "^10.0.0",
     "keycode-js": "^2.0.3",
     "lit-element": "^2.2.1",
     "node-uuid": "^1.4.8",
