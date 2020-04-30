@@ -15,7 +15,7 @@
     "crypto-js": "^4.0.0",
     "highlight.js": "^10.0.0",
     "keycode-js": "^2.0.3",
-    "lit-element": "^2.2.1",
+    "lit-element": "^2.3.1",
     "node-uuid": "^1.4.8",
     "outdent": "^0.7.0",
     "page": "^1.11.6",
