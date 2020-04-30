@@ -12,7 +12,6 @@
   
   [![Travis][travis-ci-image]][travis-ci-url]
   [![Coveralls][coveralls-image]][coveralls-url]
-  [![Greenkeeper badge][greenkeeper-image]][greenkeeper-url]
   
 </div>
 
@@ -37,6 +36,3 @@ Check out our [Contribution Guide](CONTRIBUTING.md)!
 
 [coveralls-image]: https://img.shields.io/coveralls/salte-io/utils/master.svg
 [coveralls-url]: https://coveralls.io/github/salte-io/utils?branch=master
-
-[greenkeeper-image]: https://badges.greenkeeper.io/salte-io/utils.svg
-[greenkeeper-url]: https://greenkeeper.io
