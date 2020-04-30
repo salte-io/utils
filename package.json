@@ -17,7 +17,7 @@
     "keycode-js": "^2.0.3",
     "lit-element": "^2.3.1",
     "node-uuid": "^1.4.8",
-    "outdent": "^0.7.0",
+    "outdent": "^0.7.1",
     "page": "^1.11.6",
     "pretty-data": "^0.40.0",
     "promise.prototype.finally": "^3.1.2",
