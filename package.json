@@ -35,7 +35,7 @@
     "babel-plugin-istanbul": "^6.0.0",
     "babel-plugin-module-resolver": "^4.1.0",
     "cross-env": "^7.0.3",
-    "eslint": "^7.25.0",
+    "eslint": "^7.26.0",
     "eslint-plugin-compat": "^3.9.0",
     "nps": "^5.10.0",
     "parcel-bundler": "^1.12.4",
