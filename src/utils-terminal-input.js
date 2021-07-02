@@ -1,7 +1,7 @@
 import { LitElement, html, css, customElement } from 'lit-element';
 import { KEY_UP, KEY_DOWN, KEY_RETURN, KEY_U, KEY_K } from 'keycode-js';
 
-import hljs from 'highlight.js/lib/highlight';
+import hljs from 'highlight.js/lib/core';
 import shell from 'highlight.js/lib/languages/shell';
 hljs.registerLanguage('shell', shell);
 
