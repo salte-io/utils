@@ -1,10 +1,5 @@
 {
     "compilerOptions": {
-      "experimentalDecorators": true,
-      "baseUrl": "./",
-      "paths": {
-        "@utils/*": ["*"]
-      }
+      "experimentalDecorators": true
     }
   }
-  

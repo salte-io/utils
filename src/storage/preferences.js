@@ -1,4 +1,4 @@
-import { Storage } from '@utils/src/storage/storage.js';
+import { Storage } from '../storage/storage.js';
 
 export class Preferences {
   static get terminal() {

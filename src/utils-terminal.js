@@ -1,17 +1,17 @@
 import { LitElement, html, css, customElement } from 'lit-element';
 
-import { CopyMixin } from '@utils/src/mixins/utils-copy.js';
+import { CopyMixin } from './mixins/utils-copy.js';
 
-import { Bubbles } from '@utils/src/dynamic/utils-bubbles.js';
+import { Bubbles } from './dynamic/utils-bubbles.js';
 
-import { History } from '@utils/src/storage/history.js';
-import { Preferences } from '@utils/src/storage/preferences.js';
+import { History } from './storage/history.js';
+import { Preferences } from './storage/preferences.js';
 
-import '@utils/src/utils-resizer.js';
-import '@utils/src/utils-terminal-window.js';
-import '@utils/src/utils-terminal-input.js';
-import '@utils/src/utils-command.js';
-import '@utils/src/utils-icon.js';
+import './utils-resizer.js';
+import './utils-terminal-window.js';
+import './utils-terminal-input.js';
+import './utils-command.js';
+import './utils-icon.js';
 
 @customElement('utils-terminal')
 class Terminal extends CopyMixin(LitElement) {

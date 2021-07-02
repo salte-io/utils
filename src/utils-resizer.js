@@ -1,6 +1,6 @@
 import { LitElement, html, css, customElement } from 'lit-element';
 
-import '@utils/src/events/optimized.js';
+import './events/optimized.js';
 
 @customElement('utils-resizer')
 class Resizer extends LitElement {

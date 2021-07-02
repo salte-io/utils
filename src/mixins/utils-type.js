@@ -4,7 +4,7 @@ export function TypeMixin(superClass) {
   return class extends superClass {
     type({ element, text }) {
       return new Promise((resolve) => {
-        new TypeIt(element, { afterComplete: resolve })
+        new TypeIt(element, { afterComplete: (step, instance) => resolve(instance) })
           .options({ speed: 50 })
           .type(text)
           .go();

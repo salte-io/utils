@@ -1,11 +1,11 @@
 import { repeat } from 'lit-html/directives/repeat';
 import { LitElement, html, css, customElement } from 'lit-element';
 
-import { PageMixin } from '@utils/src/mixins/utils-pages.js';
+import { PageMixin } from '../mixins/utils-pages.js';
 
-import '@utils/src/utils-card.js';
-import '@utils/src/utils-textarea.js';
-import '@utils/src/utils-pipe.js';
+import '../utils-card.js';
+import '../utils-textarea.js';
+import '../utils-pipe.js';
 
 @customElement('utils-page-pipes')
 class Pipes extends PageMixin(LitElement) {

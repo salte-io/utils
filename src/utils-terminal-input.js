@@ -5,9 +5,9 @@ import hljs from 'highlight.js/lib/core';
 import shell from 'highlight.js/lib/languages/shell';
 hljs.registerLanguage('shell', shell);
 
-import { History } from '@utils/src/storage/history.js';
+import { History } from './storage/history.js';
 
-import '@utils/src/utils-command.js';
+import './utils-command.js';
 
 @customElement('utils-terminal-input')
 class TerminalInput extends LitElement {

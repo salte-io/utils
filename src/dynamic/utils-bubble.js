@@ -1,6 +1,6 @@
 import { LitElement, html, css, customElement } from 'lit-element';
 
-import '@utils/src/utils-button.js';
+import '../utils-button.js';
 
 @customElement('utils-bubble')
 class Bubble extends LitElement {
