@@ -12,9 +12,6 @@ scripts:
     tdd:
       script: karma start karma.conf.js
       description: Watches for changes and executes the Test Suite accordingly
-    sauce:
-      script: karma start karma.ci.conf.js
-      description: Executes the Test Suite on Sauce Labs
   build:
     script: rm -rf dist && parcel build index.html && cp CNAME dist/CNAME
     description: Build the Application
