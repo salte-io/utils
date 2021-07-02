@@ -1,5 +1,5 @@
 import { outdent } from 'outdent';
-import { chalk } from '@utils/src/commands/utils/chalk.js';
+import { chalk } from '../utils/chalk.js';
 
 export default class CLI {
   static get info() {

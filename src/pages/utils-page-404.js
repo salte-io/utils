@@ -1,6 +1,6 @@
 import { LitElement, html, css, customElement } from 'lit-element';
 
-import PageMixin from '@utils/src/mixins/utils-pages.js';
+import PageMixin from '../mixins/utils-pages.js';
 
 @customElement('utils-page-404')
 class NotFound extends PageMixin(LitElement) {

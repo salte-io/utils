@@ -6,7 +6,7 @@ console.log('[Utils]: Checking for the magic! ✨');
 if (window.HTMLTemplateElement && CSS.supports('display', 'grid')) {
   console.log('[Utils]: Magic found! Launching the rockets! 🚀');
 
-  import('@utils/src/utils-app.js').then(() => {
+  import('./src/utils-app.js').then(() => {
     console.log('[Utils]: Rockets have reached orbit! 🌕');
   }).catch((error) => {
     console.log('[Utils]: Failed to reach orbit! 🔥', error);

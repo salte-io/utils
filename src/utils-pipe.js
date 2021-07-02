@@ -1,14 +1,14 @@
 import { repeat } from 'lit-html/directives/repeat';
 import { LitElement, html, css, customElement } from 'lit-element';
 
-import { Commands } from '@utils/src/commands';
+import { Commands } from './commands';
 
-import '@utils/src/utils-card.js';
-import '@utils/src/utils-options.js';
-import '@utils/src/utils-input.js';
-import '@utils/src/utils-checkbox.js';
-import '@utils/src/utils-button.js';
-import '@utils/src/utils-icon.js';
+import './utils-card.js';
+import './utils-options.js';
+import './utils-input.js';
+import './utils-checkbox.js';
+import './utils-button.js';
+import './utils-icon.js';
 
 @customElement('utils-pipe')
 class Pipe extends LitElement {

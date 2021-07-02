@@ -3,13 +3,13 @@ import '@salte-io/salte-pages';
 
 import page from 'page';
 
-import { version } from '@utils/package.json';
+import { version } from '../package.json';
 
-import '@utils/src/dynamic/utils-bubbles.js';
-import '@utils/src/utils-footer.js';
-import '@utils/src/utils-dropdown.js';
-import '@utils/src/utils-button.js';
-import '@utils/src/events/optimized.js';
+import './dynamic/utils-bubbles.js';
+import './utils-footer.js';
+import './utils-dropdown.js';
+import './utils-button.js';
+import './events/optimized.js';
 
 @customElement('utils-app')
 class App extends LitElement {
@@ -118,16 +118,16 @@ class App extends LitElement {
     let promise = null;
     switch (page) {
       case 'home':
-        promise = import('@utils/src/pages/utils-page-home.js');
+        promise = import('./pages/utils-page-home');
         break;
       case 'terminal':
-        promise = import('@utils/src/pages/utils-page-terminal.js');
+        promise = import('./pages/utils-page-terminal.js');
         break;
       case 'pipes':
-        promise = import('@utils/src/pages/utils-page-pipes.js');
+        promise = import('./pages/utils-page-pipes.js');
         break;
       case '404':
-        promise = import('@utils/src/pages/utils-page-404.js');
+        promise = import('./pages/utils-page-404.js');
         break;
     }
 

@@ -1,12 +1,12 @@
 import { LitElement, html, css, customElement } from 'lit-element';
 
-import { PageMixin } from '@utils/src/mixins/utils-pages.js';
-import { TypeMixin } from '@utils/src/mixins/utils-type.js';
-import { RandomMixin } from '@utils/src/mixins/utils-random.js';
+import { PageMixin } from '../mixins/utils-pages.js';
+import { TypeMixin } from '../mixins/utils-type.js';
+import { RandomMixin } from '../mixins/utils-random.js';
 
-import '@utils/src/utils-card.js';
-import '@utils/src/utils-terminal-window.js';
-import '@utils/src/utils-command.js';
+import '../utils-card.js';
+import '../utils-terminal-window.js';
+import '../utils-command.js';
 
 @customElement('utils-page-home')
 class Home extends RandomMixin(TypeMixin(PageMixin(LitElement))) {
@@ -95,7 +95,7 @@ class Home extends RandomMixin(TypeMixin(PageMixin(LitElement))) {
         </a>
         <a class="tool" href="/pipes">
           <utils-card>
-            <img class="pipes" src="${require('@utils/images/pipes.svg')}">
+            <img class="pipes" src="${require('../../images/pipes.svg')}">
           </utils-card>
           <div class="hover">Launch<br>Pipes GUI</div>
         </a>

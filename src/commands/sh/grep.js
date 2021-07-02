@@ -1,4 +1,4 @@
-import { chalk } from '@utils/src/commands/utils/chalk.js'
+import { chalk } from '../utils/chalk';
 
 export default class CLI {
   static get info() {

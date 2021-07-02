@@ -1,5 +1,5 @@
-import { Storage } from '@utils/src/storage/storage.js';
-import { Bubbles } from '@utils/src/dynamic/utils-bubbles.js';
+import { Storage } from '../storage/storage.js';
+import { Bubbles } from '../dynamic/utils-bubbles.js';
 
 export class History {
   static add(command) {

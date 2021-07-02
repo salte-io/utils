@@ -1,4 +1,4 @@
-import { History } from '@utils/src/storage/history.js';
+import { History } from '../../storage/history.js';
 
 export default class CLI {
   static get info() {

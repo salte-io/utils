@@ -16,7 +16,7 @@ Creating a new cli is fairly straight forward.
 First, create the `cli` class for your respective cli.
 
 ```js
-// @utils/src/commands/sh/echo.js
+// ../commands/sh/echo.js
 export default class CLI {
   // This is utilized for both help and parsing the arguments.
   static get info() {

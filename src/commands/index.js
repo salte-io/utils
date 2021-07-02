@@ -1,8 +1,8 @@
 import parser from 'yargs-parser';
 import outdent from 'outdent';
-import { Parser } from '@utils/src/commands/utils/parser.js';
+import { Parser } from '../commands/utils/parser.js';
 
-import commandModules from '@utils/src/commands/sh/*.js';
+import commandModules from '../commands/sh/*.js';
 
 const commands = Object.keys(commandModules).map((name) => ({
   name,
